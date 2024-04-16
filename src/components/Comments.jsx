@@ -12,8 +12,9 @@ const Comments = ({ comment }) => {
         to={`/user/${user.id}`}
       >
         <img
-          className='w-16 h-16 rounded-full'
+          className='w-16 h-16 rounded-full object-cover'
           src={user.profilePic} alt='imagen de usuario'
+
         />
       </Link>
       <div className='flex flex-col gap-3'>

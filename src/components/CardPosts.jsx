@@ -31,7 +31,7 @@ const CardPosts = ({ profilePic, user, post, userId }) => {
         to={`/user/${userId}`}
       >
         <img
-          className='md:w-16 md:h-16 w-10 h-10 rounded-full mr-4'
+          className='md:w-16 md:h-16 w-10 h-10 rounded-full mr-4 object-cover'
           src={profilePic} alt='imagen de usuario'
         />
       </Link>

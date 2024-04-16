@@ -38,7 +38,7 @@ const PostsPage = () => {
           className='flex items-center gap-2 font-bold'
         >
           <img
-            className='md:w-16 md:h-16 w-10 h-10 rounded-full mr-4'
+            className='md:w-16 md:h-16 w-10 h-10 rounded-full mr-4 object-cover'
             src={user.profilePic} alt='imagen de usuario'
           />
           <p className='text-lg'>{user.username}</p>
