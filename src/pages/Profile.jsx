@@ -58,21 +58,7 @@ const Profile = () => {
         <p>Publicaciones</p>
       </div>
       <div>
-        <CardPosts
-          profilePic='/ssssssss.jpg'
-          user='Mark Zuckerberg'
-          text='Lorem ipsum dolor sit amet consectetur adipisicing elit. '
-        />
-        <CardPosts
-          profilePic='/ssssssss.jpg'
-          user='Mark Zuckerberg'
-          text='Lorem ipsum dolor sit amet consectetur adipisicing elit. '
-        />
-        <CardPosts
-          profilePic='/ssssssss.jpg'
-          user='Mark Zuckerberg'
-          text='Lorem ipsum dolor sit amet consectetur adipisicing elit. '
-        />
+        hola
       </div>
       <Modal isOpen={isOpen} onClose={closeModal}>
         <FormEdit />
