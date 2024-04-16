@@ -12,7 +12,7 @@ const Comments = ({ comment }) => {
         to={`/user/${user.id}`}
       >
         <img
-          className='w-16 h-16 rounded-full object-cover'
+          className='md:w-16 md:h-16 w-10 h-10 rounded-full mr-4 object-cover'
           src={user.profilePic} alt='imagen de usuario'
 
         />
