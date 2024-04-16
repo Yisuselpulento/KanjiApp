@@ -34,7 +34,7 @@ const PostsPage = () => {
     <div className='flex flex-col gap-3 md:w-[800px] justify-center '>
       <div className='flex justify-between items-center'>
         <Link
-          to='/user/jhin'
+          to={`/user/${user.id}`}
           className='flex items-center gap-2 font-bold'
         >
           <img
