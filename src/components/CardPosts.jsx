@@ -21,7 +21,7 @@ const CardPosts = ({ profilePic, user, post, userId }) => {
     setliked(!liked)
   }
 
-  const { text, img, likes, postId } = post || {}
+  const { text, img, likes, postId, comments } = post || {}
 
   return (
     <div className='flex md:gap-5 gap-3 md:p-5 mb-6 '>
@@ -74,7 +74,7 @@ const CardPosts = ({ profilePic, user, post, userId }) => {
           </button>
         </div>
         <div className='flex gap-5 text-neutral-600'>
-          <p>2 comments</p>
+          <p>{comments.length} {comments.length === 1 ? 'comentario' : 'comentarios'}</p>
           <p>.</p>
           <p>{likes} Likes</p>
         </div>

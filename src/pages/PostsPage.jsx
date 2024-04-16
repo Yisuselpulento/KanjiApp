@@ -66,7 +66,7 @@ const PostsPage = () => {
           </button>
         </div>
         <div className='flex gap-4 text-neutral-600'>
-          <p>2 comments</p>
+          <p>{comments.length} {comments.length === 1 ? 'comentario' : 'comentarios'}</p>
           <p>.</p>
           <p>{likes} Likes</p>
         </div>
