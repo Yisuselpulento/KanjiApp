@@ -28,7 +28,7 @@ const PostsPage = () => {
     setliked(!liked)
   }
 
-  const { text, img, likes } = post || {}
+  const { text, img, likes, comments } = post || {}
 
   return (
     <div className='flex flex-col gap-3 md:w-[800px] justify-center '>
@@ -84,9 +84,14 @@ const PostsPage = () => {
       </div>
 
       <div>
-        <Comments />
-        <Comments />
-        <Comments />
+        {comments
+          ? comments.map(comment =>
+            <Comments
+              key={comment.commentId}
+              comment={comment}
+            />
+          )
+          : <p>Aun no tienes comentarios</p>}
       </div>
       <Modal isOpen={isOpen} onClose={closeModal}>
         <form className='bg-postColor md:px-8 px-4 pt-14 md:pb-8 pb-4 rounded flex flex-col md:gap-10 gap-6 '>
