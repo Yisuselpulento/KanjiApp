@@ -1,0 +1,45 @@
+{
+    "usuarios": [
+      {
+        "id": 1387406921,
+        "username": "Satoru Gojo",
+        "profilePic": "/satoru.jpg",
+        "followers": 78,
+        "following": 100,
+        "bio": "Soy un hechicero jujutsu y maestro de la técnica de la maldición. Mi objetivo es proteger a la humanidad de las criaturas malditas."
+      },
+      {
+        "id": 5748123690,
+        "username": "jhin",
+        "profilePic": "/jhin.jpg",
+        "followers": 45,
+        "following": 50,
+        "bio": "Soy un artista obsesionado con la belleza de la muerte. Cada una de mis obras es una obra maestra única, una sinfonía de destrucción y armonía."
+      },
+      {
+        "id": 9013562478,
+        "username": "Asa Mitaka",
+        "profilePic": "/reere.jpg",
+        "followers": 89,
+        "following": 80,
+        "bio": "Exploradora y aventurera de corazón, busco los rincones más remotos del mundo para descubrir sus secretos ocultos y compartirlos con el mundo."
+      },
+      {
+        "id": 6895031742,
+        "username": "Mark Zuckerberg",
+        "profilePic": "/ssssssss.jpg",
+        "followers": 67,
+        "following": 500,
+        "bio": "Soy un emprendedor y visionario tecnológico. Mi misión es conectar a las personas y crear un mundo más abierto y conectado a través de la tecnología."
+      },
+      {
+        "id": 2341897650,
+        "username": "Asa Mitaka",
+        "profilePic": "/picture.webp",
+        "followers": 92,
+        "following": 80,
+        "bio": "Apasionada por la fotografía y el arte visual, busco capturar la belleza del mundo en cada imagen y compartir mi visión única con el mundo."
+      }
+    ]
+  }
+  
