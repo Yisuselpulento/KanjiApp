@@ -13,8 +13,6 @@ const CardPosts = ({ post }) => {
   const [user, setUser] = useState({})
   const { auth } = useAuth()
 
-  const { text, likes, _id: postiD, replies, postedBy, createdAt } = post
-
   useEffect(() => {
     const getUserPerId = async () => {
       try {
@@ -36,7 +34,7 @@ const CardPosts = ({ post }) => {
   const closeModal = () => {
     setIsOpen(false)
   }
-
+  const { text, likes, _id: postiD, replies, postedBy, createdAt } = post
   const isUser = auth._id === postedBy
 
   return (

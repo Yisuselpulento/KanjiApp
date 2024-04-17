@@ -23,6 +23,7 @@ const Profile = () => {
         setPosts(data)
       } catch (error) {
         console.log(error)
+        setLoading(false)
       } finally {
         setLoading(false)
       }
@@ -38,7 +39,7 @@ const Profile = () => {
     setIsOpen(false)
   }
 
-  const { username, bio, age, country, profilePic, sexo, followers } = auth
+  const { username, bio, age, country, profilePic, sexo, followers, following } = auth
 
   if (loading) {
     return (
@@ -60,7 +61,22 @@ const Profile = () => {
             </div>
           </div>
           <div className='flex flex-col gap-5 md:max-w-[500px] max-w-[200px]'>
-            <p>  Threads is way better then bird fdsfds.</p>
+            <p className='h-[60px]'>{bio || 'Usuario de KanjiApp'}</p>
+            <div className='flex  gap-4'>
+              <div>
+                <p>Edad :</p>
+                <p>Pais :</p>
+                <p>Sexo :</p>
+
+              </div>
+              <div>
+                <p>{age}</p>
+                <p>{country}</p>
+                <p>{sexo}</p>
+
+              </div>
+            </div>
+
             <button
               onClick={openModal}
               className='dark:bg-hoverDark bg-hoverLight hover:bg-gray-400 p-2 rounded dark:hover:bg-stone-900 md:w-48  w-24'
@@ -71,14 +87,15 @@ const Profile = () => {
         <div>
           <Lightbox
             style='w-24 h-24 rounded-full object-cover cursor-pointer'
-            photo='/ssssssss.jpg' alt='post imagen de usuario'
+            photo={profilePic} alt='post imagen de usuario'
           />
 
         </div>
       </div>
       <div className='flex justify-between'>
-        <div>
-          <p>{followers?.length} followers</p>
+        <div className='flex gap-5'>
+          <p>{followers?.length === 1 ? `${followers?.length} Seguidor` : `${followers?.length} Seguidores`} </p>
+          <p>{following?.length === 1 ? `${following?.length} Seguido` : `${following?.length} Seguidos`} </p>
         </div>
         <div className='flex gap-5'>
           <FaInstagram className='md:w-9 md:h-9 w-7 h-7' />
@@ -101,7 +118,9 @@ const Profile = () => {
             </div>}
       </div>
       <Modal isOpen={isOpen} onClose={closeModal}>
-        <FormEdit />
+        <FormEdit
+          closeModal={closeModal}
+        />
       </Modal>
     </div>
   )

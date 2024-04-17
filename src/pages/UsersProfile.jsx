@@ -19,10 +19,6 @@ const UsersProfile = () => {
 
   const { id } = useParams()
 
-  const { bio, country, followers, following, profilePic, username, age } = user
-
-  const userFollow = followers?.some(follower => follower === auth._id)
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,6 +31,7 @@ const UsersProfile = () => {
         setPostsUser(userPostsData)
       } catch (error) {
         console.error('Error fetching data:', error)
+        setLoading(false)
       } finally {
         setLoading(false)
       }
@@ -50,6 +47,12 @@ const UsersProfile = () => {
     )
   }
 
+  const { bio, country, followers, sexo, following, profilePic, username, age } = user
+
+  const userFollow = followers?.some(follower => follower === auth._id)
+
+  console.log(profilePic)
+
   return (
     <div className='flex flex-col gap-6'>
       <div className='flex justify-between'>
@@ -62,7 +65,21 @@ const UsersProfile = () => {
             </div>
           </div>
           <div className='flex flex-col gap-5 md:max-w-[500px] max-w-[200px]'>
-            <p>{bio}</p>
+            <p className='h-[60px]'>{bio || 'Usuario de KanjiApp'}</p>
+            <div className='flex  gap-4'>
+              <div>
+                <p>Edad :</p>
+                <p>Pais :</p>
+                <p>Sexo :</p>
+
+              </div>
+              <div>
+                <p>{age}</p>
+                <p>{country}</p>
+                <p>{sexo}</p>
+
+              </div>
+            </div>
             <FollowButton
               id={id}
               initialUserFollow={userFollow}
@@ -78,9 +95,9 @@ const UsersProfile = () => {
         </div>
       </div>
       <div className='flex justify-between'>
-        <div>
-          <p>{followers?.length} followers</p>
-
+        <div className='flex gap-5'>
+          <p>{followers?.length === 1 ? `${followers?.length} Seguidor` : `${followers?.length} Seguidores`} </p>
+          <p>{following?.length === 1 ? `${following?.length} Seguido` : `${following?.length} Seguidos`} </p>
         </div>
         <div className='flex gap-5'>
           <FaInstagram className='md:w-9 md:h-9 w-7 h-7' />
