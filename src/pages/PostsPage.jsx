@@ -1,21 +1,43 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Lightbox from '../components/Lightbox'
 import { Link, useParams } from 'react-router-dom'
 import { FaRegHeart, FaHeart, FaRegComment } from 'react-icons/fa'
 import Modal from '../components/Modal'
 import Comments from '../components/Comments'
-import postsUsers from '../data/posts.json'
-import users from '../data/users.json'
+import { fetchPostPage } from '../services/postsFetch'
+import { getUser } from '../services/usersFetch'
 
 const PostsPage = () => {
   const [liked, setliked] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
-  const { postId: idpost } = useParams()
+  const [loadingPost, setLoadingPost] = useState(true)
+  const [loadingUser, setLoadingUser] = useState(true)
 
-  const post = postsUsers.posts.find(post => post.postId === parseInt(idpost))
-  const user = users.usuarios.find(user => user.id === post.postedBy)
+  const [post, setPost] = useState({})
+  const [user, setUser] = useState({})
 
-  console.log(user)
+  const { postId } = useParams()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const postData = await fetchPostPage(postId)
+        setPost(postData)
+        setLoadingPost(false)
+
+        const userData = await getUser(postData.postedBy)
+        setUser(userData)
+        setLoadingUser(false)
+      } catch (error) {
+        console.error('Error fetching data:', error)
+        setLoadingPost(false)
+        setLoadingUser(false)
+      }
+    }
+
+    fetchData()
+  }, [postId])
+
   const openModal = () => {
     setIsOpen(true)
   }
@@ -27,31 +49,31 @@ const PostsPage = () => {
   const handleToggleHeart = () => {
     setliked(!liked)
   }
-
-  const { text, img, likes, comments } = post || {}
+  const { text, likes, replies, createdAt } = post
+  const { profilePic, username, _id: userID } = user
 
   return (
     <div className='flex flex-col gap-3 md:w-[800px] justify-center '>
       <div className='flex justify-between items-center'>
         <Link
-          to={`/user/${user.id}`}
+          to={`/user/${userID}`}
           className='flex items-center gap-2 font-bold'
         >
           <img
             className='md:w-16 md:h-16 w-10 h-10 rounded-full mr-4 object-cover'
-            src={user.profilePic} alt='imagen de usuario'
+            src={profilePic} alt='imagen de usuario'
           />
-          <p className='text-lg'>{user.username}</p>
+          <p className='text-lg'>{username}</p>
         </Link>
         <p className='dark:text-neutral-600 text-gray-500'>hace 14 horas</p>
       </div>
       <div className='flex flex-col gap-4 justify-center  dark:bg-bgDark rounded border-x p-4'>
         <p>{text} </p>
-        {img && <Lightbox
+        {/*  {img && <Lightbox
           style='rounded'
           photo={img} alt='post imagen de usuario'
                 />}
-
+ */}
       </div>
       <div className='flex  flex-col gap-4'>
         <div className='flex  gap-5'>
@@ -66,7 +88,7 @@ const PostsPage = () => {
           </button>
         </div>
         <div className='flex gap-4 text-neutral-600'>
-          <p>{comments.length} {comments.length === 1 ? 'comentario' : 'comentarios'}</p>
+          <p>{replies?.length} {replies?.length === 1 ? 'comentario' : 'comentarios'}</p>
           <p>.</p>
           <p>{likes} Likes</p>
         </div>
@@ -84,11 +106,11 @@ const PostsPage = () => {
       </div>
 
       <div>
-        {comments
-          ? comments.map(comment =>
+        {replies
+          ? replies.map(replie =>
             <Comments
-              key={comment.commentId}
-              comment={comment}
+              key={replie._id}
+              replie={replie}
             />
           )
           : <p>Aun no tienes comentarios</p>}

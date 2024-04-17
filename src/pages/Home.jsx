@@ -1,24 +1,32 @@
-import React from 'react'
 import CardPosts from '../components/CardPosts'
-import users from '../data/users.json'
-import postsUsers from '../data/posts.json'
+import { useEffect, useState } from 'react'
+import { fetchPost } from '../services/postsFetch'
 
 const Home = () => {
-  const { posts } = postsUsers
-  const { usuarios } = users
+  const [cargando, setCargando] = useState(true)
+  const [feedPosts, setFeedPosts] = useState([])
+
+  useEffect(() => {
+    const getFeedPost = async () => {
+      try {
+        const data = await fetchPost()
+        setFeedPosts(data)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setCargando(false)
+      }
+    }
+    getFeedPost()
+  }, [])
 
   return (
     <div>
 
-      {posts.map(post => {
-        const user = usuarios.find(user => user.id === post.postedBy)
-
+      {feedPosts.map(post => {
         return (
           <CardPosts
-            key={post.postId}
-            profilePic={user.profilePic}
-            user={user.username}
-            userId={user.id}
+            key={post._id}
             post={post}
           />
         )

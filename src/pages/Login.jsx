@@ -1,12 +1,18 @@
 import { useState } from 'react'
 import Alert from '../components/Alert'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import clienteAxios from '../config/clienteAxios'
+import useAuth from '../hooks/useAuth'
 const Login = () => {
   const [formData, setFormData] = useState({
-    usuario: '',
+    username: '',
     password: ''
   })
   const [alert, setAlert] = useState({})
+
+  const { setAuth } = useAuth()
+
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -16,11 +22,9 @@ const Login = () => {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    const errors = {}
 
-    // Validación de campos vacíos
     for (const key in formData) {
       if (formData[key] === '') {
         setAlert({
@@ -32,20 +36,18 @@ const Login = () => {
       }
     }
 
-    // Validación de usuario único y longitud máxima de 10 caracteres
-    if (formData.usuario.length > 10 || formData.usuario.length < 4) {
-      setAlert({
-        msg: 'Usuario no puede tener más de 10 caracteres o menos de 4',
-        error: true
-      })
-      return
-    }
+    try {
+      const { data } = await clienteAxios.post('/users/login', formData)
 
-    // Establecer errores si los hay
-    if (Object.keys(errors).length === 0) {
+      setAlert({})
+      window.localStorage.setItem('token', data.token)
+      setAuth(data)
+      navigate('/')
+    } catch (error) {
+      console.log(error)
       setAlert({
-        msg: 'Iniciando',
-        error: false
+        msg: error.response.data.msg,
+        error: true
       })
     }
   }
@@ -64,9 +66,9 @@ const Login = () => {
             <input
               className='dark:bg-stone-900 dark:text-fontDark text-fontLight p-2 w-full border border-hoverDark'
               type='text'
-              name='usuario'
-              placeholder='Usuario'
-              value={formData.usuario}
+              name='username'
+              placeholder='username'
+              value={formData.username}
               onChange={handleChange}
             />
           </div>
@@ -82,12 +84,12 @@ const Login = () => {
             />
           </div>
 
-          <Link
+          <input
             to='/'
             className='bg-slate-700 hover:bg-slate-800 uppercase p-4 w-full font-bold text-lg text-white text-center'
             type='submit'
-          >Entrar
-          </Link>
+            value='Entrar'
+          />
           {alert.msg && <Alert alert={alert} />}
 
         </form>

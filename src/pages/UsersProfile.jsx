@@ -3,17 +3,37 @@ import CardPosts from '../components/CardPosts'
 import { IoEllipsisHorizontalCircleOutline } from 'react-icons/io5'
 import Lightbox from '../components/Lightbox'
 import { useParams } from 'react-router-dom'
-import users from '../data/users.json'
-import postsUsers from '../data/posts.json'
+import { getUser } from '../services/usersFetch'
+import { useState, useEffect } from 'react'
+import { FetchGetUserPosts } from '../services/postsFetch'
 
 const UsersProfile = () => {
+  const [user, setUser] = useState({})
+  const [postsUser, setPostsUser] = useState([])
+  const [cargando, setCargando] = useState(true)
+
   const { id } = useParams()
 
-  const user = users.usuarios.find(user => user.id === parseInt(id))
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [userData, userPostsData] = await Promise.all([
+          getUser(id),
+          FetchGetUserPosts(id)
+        ])
 
-  const userPosts = postsUsers.posts.filter(post => post.postedBy === user.id)
+        setUser(userData)
+        setPostsUser(userPostsData)
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      } finally {
+        setCargando(false)
+      }
+    }
+    fetchData()
+  }, [id])
 
-  const { bio, followers, profilePic, username } = user
+  const { bio, country, followers, following, profilePic, username, age } = user
 
   return (
     <div className='flex flex-col gap-6'>
@@ -42,7 +62,7 @@ const UsersProfile = () => {
       </div>
       <div className='flex justify-between'>
         <div>
-          <p>{followers} followers</p>
+          <p>{followers?.length} followers</p>
 
         </div>
         <div className='flex gap-5'>
@@ -54,30 +74,13 @@ const UsersProfile = () => {
         <p>Publicaciones</p>
       </div>
       <div>
-        {userPosts.map(post => (
+        {postsUser.map(post => (
           <CardPosts
-            key={post.postId}
-            profilePic={profilePic}
-            user={username}
+            key={post._id}
             post={post}
-            userId={user.id}
           />
         ))}
-        {/*  <CardPosts
-          img='/reere.jpg'
-          user='Asa Mitaka'
-          parrafe='Lorem ipsum dolor sit amet consectetur adipisicing elit. '
-        />
-        <CardPosts
-          img='/reere.jpg'
-          user='Asa Mitaka'
-          parrafe='Lorem ipsum dolor sit amet consectetur adipisicing elit. '
-        />
-        <CardPosts
-          img='/reere.jpg'
-          user='Asa Mitaka'
-          parrafe='Lorem ipsum dolor sit amet consectetur adipisicing elit. '
-        /> */}
+
       </div>
     </div>
   )

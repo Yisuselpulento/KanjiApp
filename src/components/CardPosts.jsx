@@ -1,13 +1,32 @@
 import { BsTrash3Fill } from 'react-icons/bs'
 import { FaRegHeart, FaHeart, FaRegComment } from 'react-icons/fa'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Modal from './Modal'
 import Lightbox from './Lightbox'
+import { getUser } from '../services/usersFetch'
 
-const CardPosts = ({ profilePic, user, post, userId }) => {
+const CardPosts = ({ post }) => {
   const [liked, setliked] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const [cargando, setCargando] = useState(true)
+  const [user, setUser] = useState({})
+
+  const { text, likes, _id: postiD, replies, postedBy, createdAt } = post
+
+  useEffect(() => {
+    const getUserPerId = async () => {
+      try {
+        const data = await getUser(postedBy)
+        setUser(data)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setCargando(false)
+      }
+    }
+    getUserPerId()
+  }, [])
 
   const openModal = () => {
     setIsOpen(true)
@@ -21,14 +40,14 @@ const CardPosts = ({ profilePic, user, post, userId }) => {
     setliked(!liked)
   }
 
-  const { text, img, likes, postId, comments } = post || {}
+  const { profilePic, username, _id: userID } = user
 
   return (
     <div className='flex md:gap-5 gap-3 md:p-5 mb-6 '>
 
       <Link
         className='h-full'
-        to={`/user/${userId}`}
+        to={`/user/${userID}`}
       >
         <img
           className='md:w-16 md:h-16 w-10 h-10 rounded-full mr-4 object-cover'
@@ -38,9 +57,9 @@ const CardPosts = ({ profilePic, user, post, userId }) => {
       <div className='w-full flex flex-col gap-2 '>
         <div className='flex justify-between '>
           <Link
-            to={`/user/${userId}`}
+            to={`/user/${userID}`}
             className='font-bold text-sm md:text-lg'
-          >{user}
+          >{username}
           </Link>
           <div className='flex md:gap-3 gap-1 justify-center items-center'>
             <p className='text-sm text-neutral-600'>about 14 hours ago</p>
@@ -49,17 +68,17 @@ const CardPosts = ({ profilePic, user, post, userId }) => {
         </div>
         <div className='flex flex-col md:gap-5 gap-3 border-l md:max-w-[600px] w-full'>
           <Link
-            to={`/post/${postId}`}
+            to={`/post/${postiD}`}
             className='dark:bg-bgDark bg-gray-200 md:p-4 p-2 '
           >
             <p>{text}</p>
           </Link>
-          {img && (
+          {/*   {img && (
             <Lightbox
               style='cursor-pointer object-contain rounded md:max-w-[450px]  ml-3'
               photo={img} alt='post imagen de usuario'
             />
-          )}
+          )} */}
 
         </div>
         <div className='flex gap-5 md:mt-5 mt-3'>
@@ -74,9 +93,9 @@ const CardPosts = ({ profilePic, user, post, userId }) => {
           </button>
         </div>
         <div className='flex gap-5 text-neutral-600'>
-          <p>{comments.length} {comments.length === 1 ? 'comentario' : 'comentarios'}</p>
+          <p>{replies.length} {replies.length === 1 ? 'comentario' : 'comentarios'}</p>
           <p>.</p>
-          <p>{likes} Likes</p>
+          <p>{likes.length} Likes</p>
         </div>
       </div>
       <Modal isOpen={isOpen} onClose={closeModal}>

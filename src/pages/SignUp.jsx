@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import Alert from '../components/Alert'
+import clienteAxios from '../config/clienteAxios'
+
 const SignUp = () => {
   const [formData, setFormData] = useState({
-    usuario: '',
+    username: '',
     password: '',
     repeatPassword: '',
     email: ''
@@ -17,13 +19,12 @@ const SignUp = () => {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    const errors = {}
 
-    // Validación de campos vacíos
-    for (const key in formData) {
-      if (formData[key] === '') {
+    const { repeatPassword, ...formDataToSend } = formData
+    for (const key in formDataToSend) {
+      if (formDataToSend[key] === '') {
         setAlert({
           msg: 'Todos los campos son obligatorios ',
           error: true
@@ -33,24 +34,22 @@ const SignUp = () => {
       }
     }
 
-    // Validación de usuario único y longitud máxima de 10 caracteres
-    if (formData.usuario.length > 10 || formData.usuario.length < 4) {
+    if (formDataToSend.username.length > 20 || formDataToSend.username.length < 4) {
       setAlert({
-        msg: 'Usuario no puede tener más de 10 caracteres o menos de 4',
+        msg: 'Usuario no puede tener más de 20 caracteres o menos de 4',
         error: true
       })
       return
     }
 
-    // Validación de contraseñas coincidentes y longitud máxima de 20 caracteres
-    if (formData.password !== formData.repeatPassword) {
+    if (formDataToSend.password !== formData.repeatPassword) {
       setAlert({
         msg: 'Las contraseñas no coinciden',
         error: true
       })
       return
     }
-    if (formData.password.length > 20 || formData.password.length < 4) {
+    if (formDataToSend.password.length > 20 || formDataToSend.password.length < 4) {
       setAlert({
         msg: 'La contraseña no puede tener más de 20 caracteres o menos de 4',
         error: true
@@ -58,9 +57,8 @@ const SignUp = () => {
       return
     }
 
-    // Validación de email único y formato válido
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(formData.email)) {
+    if (!emailRegex.test(formDataToSend.email)) {
       setAlert({
         msg: 'Email no es válido',
         error: true
@@ -68,33 +66,38 @@ const SignUp = () => {
       return
     }
 
-    // Establecer errores si los hay
-    if (Object.keys(errors).length === 0) {
+    try {
+      const { data } = await clienteAxios.post('/users/signup', formDataToSend)
+
       setAlert({
-        msg: 'Registro exitoso',
+        msg: data.msg,
         error: false
+      })
+    } catch (error) {
+      console.log(error)
+      setAlert({
+        msg: error.response.data.msg,
+        error: true
       })
     }
   }
+
   return (
-    <div className='flex justify-center  items-center h-full my-10'>
+    <div className='flex justify-center items-center h-full my-10'>
       <div className='dark:bg-stone-900 bg-gray-200 w-full rounded p-10 md:p-14 md:w-[500px] flex flex-col gap-4 dark:text-indigo-100 '>
         <div>
           <p>Bienvenido a KanjiApp</p>
           <p className='text-3xl font-bold'>Create una cuenta</p>
         </div>
-        <form
-          className='  flex flex-col gap-8 shadow-lg  '
-          onSubmit={handleSubmit}
-        >
+        <form className='flex flex-col gap-8 shadow-lg ' onSubmit={handleSubmit}>
           <div className='dark:text-indigo-100 text-gray-500'>
-            <label className='block   pb-2'>Usuario</label>
+            <label className='block pb-2'>Usuario</label>
             <input
               className='dark:bg-stone-900 dark:text-fontDark text-fontLight p-2 w-full border border-hoverDark'
               type='text'
-              name='usuario'
-              placeholder='Usuario'
-              value={formData.usuario}
+              name='username'
+              placeholder='Username'
+              value={formData.username}
               onChange={handleChange}
             />
           </div>
@@ -131,17 +134,14 @@ const SignUp = () => {
               placeholder='Email'
             />
           </div>
-          <button
+          <input
             className='bg-slate-700 hover:bg-slate-800 uppercase p-4 w-full font-bold text-lg text-white'
             type='submit'
-          >Registrar
-          </button>
+            value='Registrar'
+          />
           {alert.msg && <Alert alert={alert} />}
-
         </form>
-
       </div>
-
     </div>
   )
 }

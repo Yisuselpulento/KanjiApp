@@ -8,29 +8,32 @@ import UsersProfile from './pages/UsersProfile'
 import Profile from './pages/Profile'
 import { ThemeProvider } from './context/ThemeProvider'
 import PostsPage from './pages/PostsPage'
+import { AuthUserProvider } from './context/AuthUserProvider'
 
 export default function App () {
   return (
     <BrowserRouter>
-      <ThemeProvider>
-        <Routes>
-          <Route path='/' element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path='profile' element={<Profile />} />
-            <Route path='post/:postId' element={<PostsPage />} />
-            <Route path='user/:id' element={<UsersProfile />} />
-          </Route>
+      <AuthUserProvider>
+        <ThemeProvider>
+          <Routes>
+            <Route path='/' element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path='profile' element={<Profile />} />
+              <Route path='post/:postId' element={<PostsPage />} />
+              <Route path='user/:id' element={<UsersProfile />} />
+            </Route>
 
-          <Route path='/login' element={<LayoutLogin />}>
-            <Route index element={<Login />} />
-            <Route path='signup' element={<SignUp />} />
-          </Route>
+            <Route path='/login' element={<LayoutLogin />}>
+              <Route index element={<Login />} />
+              <Route path='signup' element={<SignUp />} />
+            </Route>
 
-          <Route path='/signup' element={<LayoutLogin />}>
-            <Route index element={<SignUp />} />
-          </Route>
-        </Routes>
-      </ThemeProvider>
+            <Route path='/signup' element={<LayoutLogin />}>
+              <Route index element={<SignUp />} />
+            </Route>
+          </Routes>
+        </ThemeProvider>
+      </AuthUserProvider>
     </BrowserRouter>
   )
 }
