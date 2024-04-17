@@ -7,10 +7,12 @@ import FormEdit from '../components/FormEdit'
 import Lightbox from '../components/Lightbox'
 import useAuth from '../hooks/useAuth'
 import { FetchGetUserPosts } from '../services/postsFetch'
+import Spinner from '../components/Spinner'
 
 const Profile = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(true)
 
   const { auth } = useAuth()
 
@@ -21,6 +23,8 @@ const Profile = () => {
         setPosts(data)
       } catch (error) {
         console.log(error)
+      } finally {
+        setLoading(false)
       }
     }
     getPostsProfile()
@@ -35,6 +39,14 @@ const Profile = () => {
   }
 
   const { username, bio, age, country, profilePic, sexo, followers } = auth
+
+  if (loading) {
+    return (
+      <div className='flex items-center justify-center h-screen'>
+        <Spinner />
+      </div>
+    )
+  }
 
   return (
     <div className='flex flex-col gap-6'>

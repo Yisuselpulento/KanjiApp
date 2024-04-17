@@ -1,9 +1,10 @@
 import CardPosts from '../components/CardPosts'
 import { useEffect, useState } from 'react'
 import { fetchPost } from '../services/postsFetch'
+import Spinner from '../components/Spinner'
 
 const Home = () => {
-  const [cargando, setCargando] = useState(true)
+  const [loading, setLoading] = useState(true)
   const [feedPosts, setFeedPosts] = useState([])
 
   useEffect(() => {
@@ -14,11 +15,19 @@ const Home = () => {
       } catch (error) {
         console.log(error)
       } finally {
-        setCargando(false)
+        setLoading(false)
       }
     }
     getFeedPost()
   }, [])
+
+  if (loading) {
+    return (
+      <div className='flex items-center justify-center h-screen'>
+        <Spinner />
+      </div>
+    )
+  }
 
   return (
     <div>

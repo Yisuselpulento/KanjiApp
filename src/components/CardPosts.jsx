@@ -10,10 +10,9 @@ import DeletePostButton from './DeletePostButton'
 
 const CardPosts = ({ post }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [cargando, setCargando] = useState(true)
   const [user, setUser] = useState({})
-
   const { auth } = useAuth()
+
   const { text, likes, _id: postiD, replies, postedBy, createdAt } = post
 
   useEffect(() => {
@@ -23,8 +22,6 @@ const CardPosts = ({ post }) => {
         setUser(data)
       } catch (error) {
         console.log(error)
-      } finally {
-        setCargando(false)
       }
     }
     getUserPerId()
@@ -44,7 +41,6 @@ const CardPosts = ({ post }) => {
 
   return (
     <div className='flex md:gap-5 gap-3 md:p-5 mb-6 '>
-
       <Link
         className='h-full'
         to={isUser ? '/profile' : `/user/${userID}`}

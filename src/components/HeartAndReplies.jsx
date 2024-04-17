@@ -13,12 +13,11 @@ const HeartAndReplies = ({ openModal, postiD, likes }) => {
   }, [likes, auth._id])
 
   const handleToggleHeart = async () => {
-    setliked(!liked)
     try {
       await LikeUnlikePost(postiD)
+      setliked(!liked)
     } catch (error) {
       console.log(error)
-      setliked(!liked)
     }
   }
 

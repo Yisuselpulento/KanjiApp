@@ -8,11 +8,12 @@ import { useState, useEffect } from 'react'
 import { FetchGetUserPosts } from '../services/postsFetch'
 import FollowButton from '../components/FollowButton'
 import useAuth from '../hooks/useAuth'
+import Spinner from '../components/Spinner'
 
 const UsersProfile = () => {
   const [user, setUser] = useState({})
   const [postsUser, setPostsUser] = useState([])
-  const [cargando, setCargando] = useState(true)
+  const [loading, setLoading] = useState(true)
 
   const { auth } = useAuth()
 
@@ -35,15 +36,22 @@ const UsersProfile = () => {
       } catch (error) {
         console.error('Error fetching data:', error)
       } finally {
-        setCargando(false)
+        setLoading(false)
       }
     }
     fetchData()
   }, [id])
 
+  if (loading) {
+    return (
+      <div className='flex items-center justify-center h-screen'>
+        <Spinner />
+      </div>
+    )
+  }
+
   return (
     <div className='flex flex-col gap-6'>
-
       <div className='flex justify-between'>
         <div className='flex flex-col gap-16'>
           <div className='flex flex-col gap-3'>

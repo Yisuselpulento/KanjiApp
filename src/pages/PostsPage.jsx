@@ -9,11 +9,11 @@ import HeartAndReplies from '../components/HeartAndReplies'
 import { calculateTimeSincePost } from '../helpers/TimePostFunction'
 import useAuth from '../hooks/useAuth'
 import DeletePostButton from '../components/DeletePostButton'
+import Spinner from '../components/Spinner'
 
 const PostsPage = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const [loadingPost, setLoadingPost] = useState(true)
-  const [loadingUser, setLoadingUser] = useState(true)
+  const [loading, setLoading] = useState(true)
 
   const { auth } = useAuth()
 
@@ -27,15 +27,12 @@ const PostsPage = () => {
       try {
         const postData = await fetchPostPage(postId)
         setPost(postData)
-        setLoadingPost(false)
-
         const userData = await getUser(postData.postedBy)
         setUser(userData)
-        setLoadingUser(false)
       } catch (error) {
         console.error('Error fetching data:', error)
-        setLoadingPost(false)
-        setLoadingUser(false)
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -54,6 +51,14 @@ const PostsPage = () => {
   const { profilePic, username, _id: userID } = user
 
   const isUser = auth._id === postedBy
+
+  if (loading) {
+    return (
+      <div className='flex items-center justify-center h-screen'>
+        <Spinner />
+      </div>
+    )
+  }
 
   return (
     <div className='flex flex-col gap-3 md:w-[800px] justify-center '>
