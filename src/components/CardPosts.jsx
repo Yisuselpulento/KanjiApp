@@ -1,17 +1,19 @@
-import { BsTrash3Fill } from 'react-icons/bs'
-import { FaRegHeart, FaHeart, FaRegComment } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Modal from './Modal'
 import Lightbox from './Lightbox'
 import { getUser } from '../services/usersFetch'
+import HeartAndReplies from './HeartAndReplies'
+import { calculateTimeSincePost } from '../helpers/TimePostFunction'
+import useAuth from '../hooks/useAuth'
+import DeletePostButton from './DeletePostButton'
 
 const CardPosts = ({ post }) => {
-  const [liked, setliked] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [cargando, setCargando] = useState(true)
   const [user, setUser] = useState({})
 
+  const { auth } = useAuth()
   const { text, likes, _id: postiD, replies, postedBy, createdAt } = post
 
   useEffect(() => {
@@ -26,7 +28,9 @@ const CardPosts = ({ post }) => {
       }
     }
     getUserPerId()
-  }, [])
+  }, [post])
+
+  const { profilePic, username, _id: userID } = user
 
   const openModal = () => {
     setIsOpen(true)
@@ -36,18 +40,14 @@ const CardPosts = ({ post }) => {
     setIsOpen(false)
   }
 
-  const handleToggleHeart = () => {
-    setliked(!liked)
-  }
-
-  const { profilePic, username, _id: userID } = user
+  const isUser = auth._id === postedBy
 
   return (
     <div className='flex md:gap-5 gap-3 md:p-5 mb-6 '>
 
       <Link
         className='h-full'
-        to={`/user/${userID}`}
+        to={isUser ? '/profile' : `/user/${userID}`}
       >
         <img
           className='md:w-16 md:h-16 w-10 h-10 rounded-full mr-4 object-cover'
@@ -57,13 +57,17 @@ const CardPosts = ({ post }) => {
       <div className='w-full flex flex-col gap-2 '>
         <div className='flex justify-between '>
           <Link
-            to={`/user/${userID}`}
+            to={isUser ? '/profile' : `/user/${userID}`}
             className='font-bold text-sm md:text-lg'
           >{username}
           </Link>
           <div className='flex md:gap-3 gap-1 justify-center items-center'>
-            <p className='text-sm text-neutral-600'>about 14 hours ago</p>
-            <button><BsTrash3Fill className='md:w-7 md:h-7 w-7 h-5 p-1 hover:dark:bg-hoverDark hover:bg-hoverLight rounded-full' /></button>
+            <p className='text-sm text-neutral-600'>Hace {calculateTimeSincePost(createdAt)}</p>
+            {auth._id === postedBy &&
+              <DeletePostButton
+                postId={postiD}
+              />}
+
           </div>
         </div>
         <div className='flex flex-col md:gap-5 gap-3 border-l md:max-w-[600px] w-full'>
@@ -81,17 +85,12 @@ const CardPosts = ({ post }) => {
           )} */}
 
         </div>
-        <div className='flex gap-5 md:mt-5 mt-3'>
-          <button
-            onClick={handleToggleHeart}
-          >{liked ? <FaHeart className='md:w-6 md:h-6 w-5 h-5 text-red-500 ' /> : <FaRegHeart className='md:w-6 md:h-6 w-5 h-5 ' />}
-          </button>
-          <button><FaRegComment
-            onClick={openModal}
-            className='md:w-6 md:h-6 w-5 h-5'
-                  />
-          </button>
-        </div>
+        <HeartAndReplies
+          postiD={postiD}
+          openModal={openModal}
+          likes={likes}
+        />
+
         <div className='flex gap-5 text-neutral-600'>
           <p>{replies.length} {replies.length === 1 ? 'comentario' : 'comentarios'}</p>
           <p>.</p>

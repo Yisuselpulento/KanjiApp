@@ -18,7 +18,27 @@ const getUser = async (id) => {
   }
 }
 
+const followUnfollowFetch = async (id) => {
+  try {
+    const token = window.localStorage.getItem('token')
+    if (!token) return
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    }
+
+    const { data } = await clienteAxios.post(`/users/follow/${id}`, {}, config)
+    console.log(data)
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export {
-  getUser
+  getUser,
+  followUnfollowFetch
 
 }

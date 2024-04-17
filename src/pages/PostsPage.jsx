@@ -1,17 +1,21 @@
 import { useState, useEffect } from 'react'
 import Lightbox from '../components/Lightbox'
 import { Link, useParams } from 'react-router-dom'
-import { FaRegHeart, FaHeart, FaRegComment } from 'react-icons/fa'
 import Modal from '../components/Modal'
 import Comments from '../components/Comments'
 import { fetchPostPage } from '../services/postsFetch'
 import { getUser } from '../services/usersFetch'
+import HeartAndReplies from '../components/HeartAndReplies'
+import { calculateTimeSincePost } from '../helpers/TimePostFunction'
+import useAuth from '../hooks/useAuth'
+import DeletePostButton from '../components/DeletePostButton'
 
 const PostsPage = () => {
-  const [liked, setliked] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [loadingPost, setLoadingPost] = useState(true)
   const [loadingUser, setLoadingUser] = useState(true)
+
+  const { auth } = useAuth()
 
   const [post, setPost] = useState({})
   const [user, setUser] = useState({})
@@ -46,17 +50,16 @@ const PostsPage = () => {
     setIsOpen(false)
   }
 
-  const handleToggleHeart = () => {
-    setliked(!liked)
-  }
-  const { text, likes, replies, createdAt } = post
+  const { text, likes, replies, createdAt, postedBy } = post
   const { profilePic, username, _id: userID } = user
+
+  const isUser = auth._id === postedBy
 
   return (
     <div className='flex flex-col gap-3 md:w-[800px] justify-center '>
       <div className='flex justify-between items-center'>
         <Link
-          to={`/user/${userID}`}
+          to={isUser ? '/profile' : `/user/${userID}`}
           className='flex items-center gap-2 font-bold'
         >
           <img
@@ -65,9 +68,17 @@ const PostsPage = () => {
           />
           <p className='text-lg'>{username}</p>
         </Link>
-        <p className='dark:text-neutral-600 text-gray-500'>hace 14 horas</p>
+        <div className='flex gap-3'>
+
+          <p className='dark:text-neutral-600 text-gray-500'>Hace {calculateTimeSincePost(createdAt)}</p>
+          {auth._id === postedBy &&
+            <DeletePostButton
+              postId={postId}
+            />}
+        </div>
       </div>
       <div className='flex flex-col gap-4 justify-center  dark:bg-bgDark rounded border-x p-4'>
+
         <p>{text} </p>
         {/*  {img && <Lightbox
           style='rounded'
@@ -76,21 +87,15 @@ const PostsPage = () => {
  */}
       </div>
       <div className='flex  flex-col gap-4'>
-        <div className='flex  gap-5'>
-          <button
-            onClick={handleToggleHeart}
-          >{liked ? <FaHeart className='md:w-6 md:h-6 w-5 h-5 text-red-500 ' /> : <FaRegHeart className='md:w-6 md:h-6 w-5 h-5 ' />}
-          </button>
-          <button><FaRegComment
-            onClick={openModal}
-            className='md:w-6 md:h-6 w-5 h-5'
-                  />
-          </button>
-        </div>
+        <HeartAndReplies
+          postiD={postId}
+          openModal={openModal}
+          likes={likes}
+        />
         <div className='flex gap-4 text-neutral-600'>
           <p>{replies?.length} {replies?.length === 1 ? 'comentario' : 'comentarios'}</p>
           <p>.</p>
-          <p>{likes} Likes</p>
+          <p>{likes?.length} Likes</p>
         </div>
 
       </div>

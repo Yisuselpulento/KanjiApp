@@ -1,16 +1,30 @@
 import { FaInstagram } from 'react-icons/fa'
 import CardPosts from '../components/CardPosts'
 import { IoEllipsisHorizontalCircleOutline } from 'react-icons/io5'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Modal from '../components/Modal'
 import FormEdit from '../components/FormEdit'
 import Lightbox from '../components/Lightbox'
 import useAuth from '../hooks/useAuth'
+import { FetchGetUserPosts } from '../services/postsFetch'
 
 const Profile = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [posts, setPosts] = useState([])
 
   const { auth } = useAuth()
+
+  useEffect(() => {
+    const getPostsProfile = async () => {
+      try {
+        const data = await FetchGetUserPosts(auth._id)
+        setPosts(data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getPostsProfile()
+  }, [posts])
 
   const openModal = () => {
     setIsOpen(true)
@@ -63,7 +77,16 @@ const Profile = () => {
         <p>Publicaciones</p>
       </div>
       <div>
-        hola
+        {posts.length
+          ? posts?.map(post =>
+            <CardPosts
+              key={post._id}
+              post={post}
+            />
+          )
+          : <div className='flex items-center justify-center h-screen'>
+            <p className='font-bold'>No tienes ningun post aun</p>
+            </div>}
       </div>
       <Modal isOpen={isOpen} onClose={closeModal}>
         <FormEdit />

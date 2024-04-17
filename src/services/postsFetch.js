@@ -54,9 +54,66 @@ const fetchPostPage = async (id) => {
   }
 }
 
+const LikeUnlikePost = async (id) => {
+  try {
+    const token = window.localStorage.getItem('token')
+    if (!token) return
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    }
+
+    const { data } = await clienteAxios.put(`/posts/like/${id}`, {}, config)
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const createPost = async (form) => {
+  try {
+    const token = window.localStorage.getItem('token')
+    if (!token) return
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    }
+
+    const { data } = await clienteAxios.post('/posts/create', form, config)
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const deletePost = async (id) => {
+  try {
+    const token = window.localStorage.getItem('token')
+    if (!token) return
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    }
+
+    const { data } = await clienteAxios.delete(`/posts/${id}`, config)
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export {
   fetchPost,
   FetchGetUserPosts,
-  fetchPostPage
+  fetchPostPage,
+  LikeUnlikePost,
+  createPost,
+  deletePost
 
 }

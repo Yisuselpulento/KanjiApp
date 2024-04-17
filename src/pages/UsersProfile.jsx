@@ -6,13 +6,21 @@ import { useParams } from 'react-router-dom'
 import { getUser } from '../services/usersFetch'
 import { useState, useEffect } from 'react'
 import { FetchGetUserPosts } from '../services/postsFetch'
+import FollowButton from '../components/FollowButton'
+import useAuth from '../hooks/useAuth'
 
 const UsersProfile = () => {
   const [user, setUser] = useState({})
   const [postsUser, setPostsUser] = useState([])
   const [cargando, setCargando] = useState(true)
 
+  const { auth } = useAuth()
+
   const { id } = useParams()
+
+  const { bio, country, followers, following, profilePic, username, age } = user
+
+  const userFollow = followers?.some(follower => follower === auth._id)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,8 +41,6 @@ const UsersProfile = () => {
     fetchData()
   }, [id])
 
-  const { bio, country, followers, following, profilePic, username, age } = user
-
   return (
     <div className='flex flex-col gap-6'>
 
@@ -49,7 +55,10 @@ const UsersProfile = () => {
           </div>
           <div className='flex flex-col gap-5 md:max-w-[500px] max-w-[200px]'>
             <p>{bio}</p>
-            <button className='dark:bg-hoverDark bg-hoverLight hover:bg-gray-400 p-2 rounded dark:hover:bg-stone-900 md:w-48  w-24'>Seguir</button>
+            <FollowButton
+              id={id}
+              initialUserFollow={userFollow}
+            />
           </div>
         </div>
         <div>

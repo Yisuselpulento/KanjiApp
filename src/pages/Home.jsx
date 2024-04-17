@@ -22,15 +22,18 @@ const Home = () => {
 
   return (
     <div>
-
-      {feedPosts.map(post => {
-        return (
-          <CardPosts
-            key={post._id}
-            post={post}
-          />
-        )
-      })}
+      {feedPosts.length
+        ? feedPosts.map(post => {
+          return (
+            <CardPosts
+              key={post._id}
+              post={post}
+            />
+          )
+        })
+        : (<div className='flex items-center justify-center h-screen'>
+          <p className='font-bold'>No sigues a nadie aun</p>
+           </div>)}
 
     </div>
   )

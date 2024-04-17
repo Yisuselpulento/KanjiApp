@@ -7,6 +7,7 @@ import { IoIosAdd } from 'react-icons/io'
 import { useState } from 'react'
 import Modal from '../components/Modal'
 import useAuth from '../hooks/useAuth'
+import FormPost from '../components/FormPost'
 
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -70,23 +71,9 @@ const Layout = () => {
         <IoIosAdd className='font-bold w-8 h-8' />
       </button>
       <Modal isOpen={isOpen} onClose={closeModal}>
-        <form className='bg-postColor md:px-8 px-4 pt-14 md:pb-8 pb-4 rounded flex flex-col md:gap-6 gap-6 text-gray-200'>
-          <p className='text-2xl font-bold'>Crea un post</p>
-          <input
-            type='text'
-            className='rounded border p-3 text-lg border-[#64748b] bg-postColor w-full h-24 '
-          />
-          <input
-            type='file'
-          />
-          <div className='flex justify-end'>
-            <input
-              value='Post'
-              type='submit'
-              className=' bg-blue-300 border border-blue-400 hover:bg-blue-400 text-gray-700 font-bold md:px-4 px-2 md:py-2 py-1 rounded md:w-[100px] w-[70px] cursor-pointer text-sm md:text-lg'
-            />
-          </div>
-        </form>
+        <FormPost
+          closeModal={closeModal}
+        />
       </Modal>
     </div>
   )
