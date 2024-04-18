@@ -8,11 +8,13 @@ import { useState } from 'react'
 import Modal from '../components/Modal'
 import useAuth from '../hooks/useAuth'
 import FormPost from '../components/FormPost'
+import Toast from '../components/Toast'
 
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [toastMsg, setToastMsg] = useState('')
 
-  const { auth, setAuth, cargando } = useAuth()
+  const { auth, setAuth } = useAuth()
 
   const openModal = () => {
     setIsOpen(true)
@@ -25,6 +27,10 @@ const Layout = () => {
   const handleSesionClose = () => {
     setAuth({})
     window.localStorage.removeItem('token')
+  }
+
+  const showToast = (message) => {
+    setToastMsg(message)
   }
 
   return (
@@ -58,7 +64,7 @@ const Layout = () => {
           <main className='min-h-screen md:mt-16 mt-8 '>
             <Outlet />
           </main>
-        </ >
+        </>
         : <Navigate to='/login' />}
 
       <footer className='flex items-center justify-center dark:bg-bgDark border-t border-gray-100 h-[100px] bg-gray-200'>
@@ -72,9 +78,11 @@ const Layout = () => {
       </button>
       <Modal isOpen={isOpen} onClose={closeModal}>
         <FormPost
+          showToast={showToast}
           closeModal={closeModal}
         />
       </Modal>
+      {toastMsg && <Toast msg={toastMsg} />}
     </div>
   )
 }
