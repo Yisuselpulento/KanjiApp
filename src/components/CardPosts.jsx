@@ -34,7 +34,7 @@ const CardPosts = ({ post }) => {
   const closeModal = () => {
     setIsOpen(false)
   }
-  const { text, likes, _id: postiD, replies, postedBy, createdAt } = post
+  const { text, likes, _id: postiD, replies, postedBy, createdAt, img } = post
   const isUser = auth._id === postedBy
 
   return (
@@ -71,12 +71,12 @@ const CardPosts = ({ post }) => {
           >
             <p>{text}</p>
           </Link>
-          {/*   {img && (
+          {img && (
             <Lightbox
               style='cursor-pointer object-contain rounded md:max-w-[450px]  ml-3'
               photo={img} alt='post imagen de usuario'
             />
-          )} */}
+          )}
 
         </div>
         <HeartAndReplies

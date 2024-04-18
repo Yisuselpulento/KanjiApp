@@ -51,8 +51,6 @@ const UsersProfile = () => {
 
   const userFollow = followers?.some(follower => follower === auth._id)
 
-  console.log(profilePic)
-
   return (
     <div className='flex flex-col gap-6'>
       <div className='flex justify-between'>

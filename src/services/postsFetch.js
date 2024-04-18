@@ -84,6 +84,7 @@ const createPost = async (form) => {
     }
 
     const { data } = await clienteAxios.post('/posts/create', form, config)
+    console.log(data)
     return data
   } catch (error) {
     console.log(error)

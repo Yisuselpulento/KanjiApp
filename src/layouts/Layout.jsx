@@ -8,11 +8,9 @@ import { useState } from 'react'
 import Modal from '../components/Modal'
 import useAuth from '../hooks/useAuth'
 import FormPost from '../components/FormPost'
-import Toast from '../components/Toast'
 
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const [toastMsg, setToastMsg] = useState('')
 
   const { auth, setAuth } = useAuth()
 
@@ -27,10 +25,6 @@ const Layout = () => {
   const handleSesionClose = () => {
     setAuth({})
     window.localStorage.removeItem('token')
-  }
-
-  const showToast = (message) => {
-    setToastMsg(message)
   }
 
   return (
@@ -78,11 +72,11 @@ const Layout = () => {
       </button>
       <Modal isOpen={isOpen} onClose={closeModal}>
         <FormPost
-          showToast={showToast}
+
           closeModal={closeModal}
         />
       </Modal>
-      {toastMsg && <Toast msg={toastMsg} />}
+
     </div>
   )
 }

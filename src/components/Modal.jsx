@@ -15,7 +15,7 @@ const Modal = ({ isOpen, onClose, children }) => {
         <div className='fixed z-10 inset-0 overflow-y-auto'>
           <div className='flex items-center justify-center min-h-screen '>
             <div className='fixed inset-0 bg-gray-700 opacity-75 ' />
-            <div className='relative  overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full  w-screen px-2 '>
+            <div className='relative  overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full  w-screen px-2'>
               <div className='absolute top-4 right-4 md:p-5 md:top-0 md:right-0 '>
                 <button
                   onClick={closeModal}
