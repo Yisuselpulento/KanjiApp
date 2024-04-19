@@ -56,8 +56,35 @@ const updateUser = async (formData, id) => {
   }
 }
 
+const fetchUserbyUserName = async (user) => {
+  try {
+    const token = window.localStorage.getItem('token')
+    if (!token) {
+      console.error('Token not found')
+      return null
+    }
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    }
+    const response = await clienteAxios(`/users/search/${user}`, config)
+
+    if (response.status !== 200) {
+      console.error(`Error with status code: ${response.status}`)
+      return null
+    }
+    return response.data
+  } catch (error) {
+    console.error('Network or request error:', error)
+    return null
+  }
+}
+
 export {
   getUser,
   followUnfollowFetch,
-  updateUser
+  updateUser,
+  fetchUserbyUserName
 }

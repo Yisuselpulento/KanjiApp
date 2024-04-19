@@ -8,6 +8,7 @@ import { useState } from 'react'
 import Modal from '../components/Modal'
 import useAuth from '../hooks/useAuth'
 import FormPost from '../components/FormPost'
+import SearchBar from '../components/SearchBar'
 
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -40,6 +41,7 @@ const Layout = () => {
               ><FaHome className='md:w-6 md:h-6 w-5 h-5' />
               </NavLink>
               <ButtonTheme />
+              <SearchBar />
               <div className='flex gap-3'>
                 <NavLink
                   className={({ isActive }) =>

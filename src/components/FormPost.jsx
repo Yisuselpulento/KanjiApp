@@ -35,7 +35,7 @@ const FormPost = ({ closeModal }) => {
         const formData = new FormData()
         formData.append('file', image)
         formData.append('upload_preset', 'image_preset')
-
+        setLoading(true)
         const res = await axios.post(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME}/image/upload`, formData)
 
         imageUrl = res.data.secure_url
