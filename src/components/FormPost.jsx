@@ -78,17 +78,19 @@ const FormPost = ({ closeModal }) => {
         type='file'
         id='image-upload'
         onChange={handleImageChange}
+        className='rounded-md bg-slate-800 font-bold w-[250px] p-2'
       />
-      <div className='flex justify-end gap-5'>
+      <div className='flex justify-end gap-5 items-center'>
         {alert.msg && <Alert alert={alert} />}
 
-        {loading
-          ? <div><Spinner size='30' /></div>
-          : <button
-              type='submit'
-              className='bg-blue-300 border border-blue-400 hover:bg-blue-400 text-gray-700 font-bold md:px-4 px-2 md:py-2 py-1 rounded md:w-[100px] w-[70px] cursor-pointer text-sm md:text-lg flex items-center justify-center'
-            >Post
-            </button>}
+        <button
+          disabled={loading}
+          type='submit'
+          className='bg-blue-300 border border-blue-400 hover:bg-blue-400 text-gray-700 font-bold md:px-4 px-2 md:py-2 py-1 rounded md:w-[100px] w-[70px] cursor-pointer text-sm md:text-lg flex items-center justify-center'
+        >{loading
+          ? <div><Spinner size='23' /></div>
+          : 'Post'}
+        </button>
 
       </div>
     </form>

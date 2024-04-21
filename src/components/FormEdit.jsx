@@ -3,6 +3,7 @@ import useAuth from '../hooks/useAuth'
 import axios from 'axios'
 import { updateUser } from '../services/usersFetch'
 import Spinner from './Spinner'
+import Countries from '../helpers/Countries.json'
 
 const FormEdit = ({ closeModal }) => {
   const { auth } = useAuth()
@@ -82,80 +83,93 @@ const FormEdit = ({ closeModal }) => {
             type='file'
             id='image-upload'
             onChange={handleImageChange}
+            className='rounded-md bg-stone-800 font-bold w-[250px] p-2'
           />
+
         </div>
-        {!loading
-          ? (
-            <form
-              className='  flex flex-col md:gap-8 gap-5 shadow-lg'
-              onSubmit={handleSubmit}
+
+        <form
+          className='  flex flex-col md:gap-8 gap-5 shadow-lg'
+          onSubmit={handleSubmit}
+        >
+          <div>
+            <label className='block pb-2'>Edad</label>
+            <input
+              className='dark:bg-stone-900 dark:text-fontDark text-fontLight p-2 w-full border border-hoverDark'
+              type='text'
+              name='age'
+              placeholder='18'
+              value={formData.age}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <select
+              className='dark:bg-stone-900 dark:text-fontDark text-fontLight p-2 w-full border border-hoverDark '
+              name='sexo'
+              value={formData.sexo}
+              onChange={handleChange}
             >
-              <div>
-                <label className='block pb-2'>Edad</label>
-                <input
-                  className='dark:bg-stone-900 dark:text-fontDark text-fontLight p-2 w-full border border-hoverDark'
-                  type='text'
-                  name='age'
-                  placeholder='18'
-                  value={formData.age}
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <label className='block pb-2'>Sexo</label>
-                <input
-                  className='dark:bg-stone-900 dark:text-fontDark text-fontLight p-2 w-full border border-hoverDark'
-                  type='text'
-                  name='sexo'
-                  placeholder='Masculino'
-                  value={formData.sexo}
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <label className='block pb-2'>Pais</label>
-                <input
-                  className='dark:bg-stone-900 dark:text-fontDark text-fontLight p-2 w-full border border-hoverDark'
-                  type='text'
-                  name='country'
-                  placeholder='Chile'
-                  value={formData.country}
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <label className='block pb-2'>Bio</label>
-                <input
-                  className='dark:bg-stone-900 dark:text-fontDark text-fontLight p-2 w-full border border-hoverDark'
-                  type='text'
-                  name='bio'
-                  placeholder='Colocar aqui...'
-                  value={formData.bio}
-                  onChange={handleChange}
-                />
-              </div>
+              <option value='Mujer'>Mujer</option>
+              <option value='Hombre'>Hombre</option>
+            </select>
+          </div>
+          <div>
+            <label className='block pb-2'>Pais</label>
+            <select
+              className='dark:bg-stone-900 dark:text-fontDark text-fontLight p-2 w-full border border-hoverDark'
+              value={formData.country}
+              onChange={handleChange}
+              name='country'
+              placeholder='Chile'
+            >
+              <option
+                disabled selected
+              >Selecciona un país
+              </option>
+              {Countries.map((country, index) => (
+                <option
+                  key={index} value={country.name}
+                >{country.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className='block pb-2'>Bio</label>
+            <textarea
+              className='dark:bg-stone-900 dark:text-fontDark text-fontLight p-2 w-full border border-hoverDark'
+              type='text'
+              name='bio'
+              placeholder='Colocar aqui...'
+              value={formData.bio}
+              onChange={handleChange}
+            />
+          </div>
 
-              <div className='flex gap-4'>
-                <button
-                  onClick={() => closeModal()}
-                  className='bg-red-400 hover:bg-red-500 rounded uppercase md:p-3 p-1 w-full font-bold md:text-lg text-white'
-                >
-                  cancelar
-                </button>
-                <button
-                  className='bg-green-500 hover:bg-green-600 rounded uppercase md:p-3 p-1 w-full font-bold md:text-lg text-white'
-                  type='submit'
-                >
-                  aceptar
-                </button>
-              </div>
+          <div className='flex gap-4'>
+            <button
+              disabled={loading}
+              onClick={() => closeModal()}
+              className='bg-red-400 hover:bg-red-500 rounded uppercase md:p-3 p-1 w-full font-bold md:text-lg text-white'
+            >
+              cancelar
+            </button>
+            <button
+              disabled={loading}
+              className='bg-green-500 hover:bg-green-600 rounded uppercase md:p-3 p-1 w-full font-bold md:text-lg text-white'
+              type='submit'
+            >
+              {!loading
+                ? <div className='flex items-center justify-center '>
+                  <Spinner size='30' />
+                </div>
+                : 'Aceptar'}
+            </button>
+          </div>
 
-            </form>)
-          : (
-            <div className='flex items-center justify-center h-[400px] '>
-              <Spinner />
-            </div>
-            )}
+        </form>
+
       </div>
     </div>
   )

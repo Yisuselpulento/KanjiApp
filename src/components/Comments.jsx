@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom'
-import users from '../data/users.json'
+/* import { Link } from 'react-router-dom'
 
 const Comments = ({ comment }) => {
   const { text, userId } = comment
@@ -30,3 +29,4 @@ const Comments = ({ comment }) => {
 }
 
 export default Comments
+ */

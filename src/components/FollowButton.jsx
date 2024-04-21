@@ -20,19 +20,21 @@ const FollowButton = ({ id, initialUserFollow }) => {
     }
   }
 
+  const textButton = userFollow ? 'Siguiendo' : 'Seguir'
+
   return (
     <>
-      {!loading
-        ? (
-          <button
-            onClick={handleFollowUnfollowUser}
-            className='dark:bg-hoverDark bg-hoverLight hover:bg-gray-400 p-2 rounded dark:hover:bg-stone-900 md:w-48  w-24'
-          >{userFollow ? 'No seguir' : 'Seguir'}
-          </button>
-          )
+
+      <button
+        disabled={loading}
+        onClick={handleFollowUnfollowUser}
+        className={`dark:bg-hoverDark bg-hoverLight hover:bg-gray-400 p-2 rounded dark:hover:bg-stone-900 md:w-48 w-24 ${userFollow ? 'border border-green-400' : ''}`}
+      >{!loading
+        ? textButton
         : <div className='flex items-center justify-center'>
-          <Spinner size='40' />
-        </div>}
+          <Spinner size='23' />
+          </div>}
+      </button>
 
     </>
   )

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Lightbox from '../components/Lightbox'
 import { Link, useParams } from 'react-router-dom'
 import Modal from '../components/Modal'
-import Comments from '../components/Comments'
+/* import Comments from '../components/Comments' */
 import { fetchPostPage } from '../services/postsFetch'
 import HeartAndReplies from '../components/HeartAndReplies'
 import { calculateTimeSincePost } from '../helpers/TimePostFunction'
@@ -114,14 +114,14 @@ const PostsPage = () => {
       </div>
 
       <div>
-        {replies
+        {/*  {replies
           ? replies?.map(replie =>
             <Comments
               key={replie._id}
               replie={replie}
             />
           )
-          : <p>Aun no tienes comentarios</p>}
+          : <p>Aun no tienes comentarios</p>} */}
       </div>
       <Modal isOpen={isOpen} onClose={closeModal}>
         <form className='bg-postColor md:px-8 px-4 pt-14 md:pb-8 pb-4 rounded flex flex-col md:gap-10 gap-6 '>

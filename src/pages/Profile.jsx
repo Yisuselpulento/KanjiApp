@@ -56,7 +56,6 @@ const Profile = () => {
           <div className='flex flex-col gap-3'>
             <p className='font-bold md:text-4xl text-xl'>{username}</p>
             <div className='flex gap-5 items-center'>
-              <p>zuck</p>
               <p className='dark:bg-hoverDark p-1 rounded-full text-neutral-500'>kanjiapp.net</p>
             </div>
           </div>
