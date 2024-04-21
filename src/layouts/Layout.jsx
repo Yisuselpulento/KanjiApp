@@ -9,6 +9,8 @@ import Modal from '../components/Modal'
 import useAuth from '../hooks/useAuth'
 import FormPost from '../components/FormPost'
 import SearchBar from '../components/SearchBar'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -64,6 +66,12 @@ const Layout = () => {
         : <Navigate to='/login' />}
 
       <footer className='flex items-center justify-center dark:bg-bgDark border-t border-gray-100 h-[100px] bg-gray-200'>
+        <ToastContainer
+          theme='colored'
+          autoClose={3000}
+          position='bottom-center'
+          className='px-10 rounded'
+        />
         FOOTER
       </footer>
       <button
@@ -74,7 +82,6 @@ const Layout = () => {
       </button>
       <Modal isOpen={isOpen} onClose={closeModal}>
         <FormPost
-
           closeModal={closeModal}
         />
       </Modal>

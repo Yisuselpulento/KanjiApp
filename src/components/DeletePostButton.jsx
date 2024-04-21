@@ -3,6 +3,7 @@ import { deletePost } from '../services/postsFetch'
 import Modal from './Modal'
 import { useState } from 'react'
 import Spinner from './Spinner'
+import { toast } from 'react-toastify'
 
 const DeletePostButton = ({ postId }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -12,10 +13,11 @@ const DeletePostButton = ({ postId }) => {
     try {
       setLoading(true)
       await deletePost(postId)
-      setLoading(false)
+      toast.success('Eliminado Correctamente')
       closeModal()
     } catch (error) {
       console.log(error)
+      toast.error('Ha ocurrido un error')
       setLoading(false)
     } finally {
       setLoading(false)
@@ -54,7 +56,7 @@ const DeletePostButton = ({ postId }) => {
             >{loading
               ? <div>
                 <Spinner size='25' />
-                </div>
+              </div>
               : 'Aceptar'}
             </button>
             </div>

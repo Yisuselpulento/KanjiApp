@@ -11,7 +11,6 @@ const FollowButton = ({ id, initialUserFollow }) => {
       setLoading(true)
       await followUnfollowFetch(id)
       setUserFollow(prevState => !prevState)
-      setLoading(false)
     } catch (error) {
       setLoading(false)
       console.log(error)

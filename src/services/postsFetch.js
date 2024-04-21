@@ -105,6 +105,44 @@ const deletePost = async (id) => {
     }
 
     const { data } = await clienteAxios.delete(`/posts/${id}`, config)
+
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const createReplies = async (id, replieInfo) => {
+  try {
+    const token = window.localStorage.getItem('token')
+    if (!token) return
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    }
+
+    const { data } = await clienteAxios.post(`/posts/create/${id}`, replieInfo, config)
+
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const deleteReplie = async (postId, id) => {
+  try {
+    const token = window.localStorage.getItem('token')
+    if (!token) return
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    }
+
+    const { data } = await clienteAxios.delete(`/posts/${postId}/${id}`, config)
     return data
   } catch (error) {
     console.log(error)
@@ -117,6 +155,8 @@ export {
   LikeUnlikePost,
   createPost,
   deletePost,
-  fetchPostFeed
+  fetchPostFeed,
+  createReplies,
+  deleteReplie
 
 }

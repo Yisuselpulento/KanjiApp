@@ -2,17 +2,22 @@ import { useState, useEffect } from 'react'
 import Lightbox from '../components/Lightbox'
 import { Link, useParams } from 'react-router-dom'
 import Modal from '../components/Modal'
-/* import Comments from '../components/Comments' */
-import { fetchPostPage } from '../services/postsFetch'
+import Comments from '../components/Comments'
+import { fetchPostPage, createReplies } from '../services/postsFetch'
 import HeartAndReplies from '../components/HeartAndReplies'
 import { calculateTimeSincePost } from '../helpers/TimePostFunction'
 import useAuth from '../hooks/useAuth'
 import DeletePostButton from '../components/DeletePostButton'
 import Spinner from '../components/Spinner'
+import { toast } from 'react-toastify'
+import FormReplies from '../components/FormReplies'
 
 const PostsPage = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(true)
+
+  const [postText, setPostText] = useState('')
+  const [alert, setAlert] = useState({})
 
   const { auth } = useAuth()
 
@@ -24,7 +29,6 @@ const PostsPage = () => {
     const fetchData = async () => {
       try {
         const postData = await fetchPostPage(postId)
-        console.log(postData)
         setPost(postData)
       } catch (error) {
         console.error('Error fetching data:', error)
@@ -55,6 +59,35 @@ const PostsPage = () => {
         <Spinner />
       </div>
     )
+  }
+
+  const handlePostReplie = async (e) => {
+    e.preventDefault()
+
+    if (!postText.trim()) {
+      setAlert({
+        msg: 'No hay nada escrito',
+        error: true
+      })
+    }
+
+    try {
+      const replieInfo = {
+        text: postText,
+        postedBy: auth._id
+      }
+      await createReplies(postId, replieInfo)
+      toast.success('Comentario Creado Correctamente')
+      setPostText('')
+    } catch (error) {
+      setLoading(false)
+      toast.error('Ha ocurrido un error')
+      console.error('Error al crear el post:', error)
+    }
+  }
+
+  const handleTextChange = (e) => {
+    setPostText(e.target.value)
   }
 
   return (
@@ -102,40 +135,39 @@ const PostsPage = () => {
         </div>
 
       </div>
-      <div className='flex justify-between gap-4'>
+      <form
+        onSubmit={handlePostReplie}
+        className='flex justify-between gap-4'
+      >
         <input
+          type='text'
+          value={postText}
+          onChange={handleTextChange}
           placeholder='Comenta aqui...'
           className='w-full md:p-4 p-3 dark:bg-bgDark border bg-gray-200 dark:border-neutral-800 rounded text-lg'
         />
         <button
+          type='submit'
           className='font-bold dark:bg-neutral-800 bg-gray-200 hover:bg-gray-300 dark:hover:bg-neutral-900  px-3 md:px-5 rounded'
         >Post
         </button>
-      </div>
+      </form>
 
       <div>
-        {/*  {replies
+        {replies
           ? replies?.map(replie =>
             <Comments
               key={replie._id}
               replie={replie}
+              postid={postId}
             />
           )
-          : <p>Aun no tienes comentarios</p>} */}
+          : <p>Aun no tienes comentarios</p>}
       </div>
       <Modal isOpen={isOpen} onClose={closeModal}>
-        <form className='bg-postColor md:px-8 px-4 pt-14 md:pb-8 pb-4 rounded flex flex-col md:gap-10 gap-6 '>
-          <input
-            className='p-3 rounded border border-[#64748b] bg-postColor w-full  '
-          />
-          <div className='flex justify-end'>
-            <input
-              value='Post'
-              type='submit'
-              className=' bg-blue-300 border border-blue-400 hover:bg-blue-400 text-gray-700 font-bold md:px-4 px-2 md:py-2 py-1 rounded md:w-[100px] w-[70px] cursor-pointer text-sm md:text-lg'
-            />
-          </div>
-        </form>
+        <FormReplies
+          postId={postId}
+        />
       </Modal>
     </div>
   )

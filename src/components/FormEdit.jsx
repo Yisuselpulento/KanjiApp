@@ -4,6 +4,7 @@ import axios from 'axios'
 import { updateUser } from '../services/usersFetch'
 import Spinner from './Spinner'
 import Countries from '../helpers/Countries.json'
+import { toast } from 'react-toastify'
 
 const FormEdit = ({ closeModal }) => {
   const { auth } = useAuth()
@@ -50,16 +51,16 @@ const FormEdit = ({ closeModal }) => {
       const userData = { ...formData, profilePic: imageUrl }
       console.log(userData)
       await updateUser(userData, auth._id)
-      setLoading(false)
       setFormData({
         age: '',
         sexo: '',
         country: '',
         bio: ''
       })
-
+      toast.success('Datos actualizados correctamente')
       setImage(null)
     } catch (error) {
+      toast.error('Ha ocurrido un error')
       console.log(error)
       setLoading(false)
     } finally {
@@ -160,7 +161,7 @@ const FormEdit = ({ closeModal }) => {
               className='bg-green-500 hover:bg-green-600 rounded uppercase md:p-3 p-1 w-full font-bold md:text-lg text-white'
               type='submit'
             >
-              {!loading
+              {loading
                 ? <div className='flex items-center justify-center '>
                   <Spinner size='30' />
                 </div>

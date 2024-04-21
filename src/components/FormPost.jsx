@@ -4,6 +4,7 @@ import useAuth from '../hooks/useAuth'
 import Spinner from './Spinner'
 import Alert from './Alert'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const FormPost = ({ closeModal }) => {
   const { auth } = useAuth()
@@ -49,11 +50,12 @@ const FormPost = ({ closeModal }) => {
         img: imageUrl
       })
       closeModal()
-      setLoading(false)
+      toast.success('Post Creado Correctamente')
       setPostText('')
       setImage(null)
     } catch (error) {
       setLoading(false)
+      toast.error('Ha ocurrido un error')
       console.error('Error al crear el post:', error)
     } finally {
       setLoading(false)

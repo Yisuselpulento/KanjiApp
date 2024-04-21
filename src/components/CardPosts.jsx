@@ -7,6 +7,7 @@ import HeartAndReplies from './HeartAndReplies'
 import { calculateTimeSincePost } from '../helpers/TimePostFunction'
 import useAuth from '../hooks/useAuth'
 import DeletePostButton from './DeletePostButton'
+import FormReplies from './FormReplies'
 
 const CardPosts = ({ post }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -77,18 +78,9 @@ const CardPosts = ({ post }) => {
         </div>
       </div>
       <Modal isOpen={isOpen} onClose={closeModal}>
-        <form className='bg-postColor md:px-8 px-4 pt-14 md:pb-8 pb-4 rounded flex flex-col md:gap-10 gap-6 '>
-          <input
-            className='p-3 rounded border border-[#64748b] bg-postColor w-full  '
-          />
-          <div className='flex justify-end'>
-            <input
-              value='Post'
-              type='submit'
-              className=' bg-blue-300 border border-blue-400 hover:bg-blue-400 text-gray-700 font-bold md:px-4 px-2 md:py-2 py-1 rounded md:w-[100px] w-[70px] cursor-pointer text-sm md:text-lg'
-            />
-          </div>
-        </form>
+        <FormReplies
+          postId={_id}
+        />
       </Modal>
     </div>
   )
