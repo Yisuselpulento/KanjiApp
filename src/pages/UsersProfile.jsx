@@ -104,12 +104,17 @@ const UsersProfile = () => {
         <p>Publicaciones</p>
       </div>
       <div>
-        {postsUser.map(post => (
-          <CardPosts
-            key={post._id}
-            post={post}
-          />
-        ))}
+        {postsUser?.length > 1
+          ? postsUser.map(post => (
+            <CardPosts
+              key={post._id}
+              post={post}
+            />
+          ))
+
+          : <div className='flex items-center justify-center p-10'>
+            <p className='font-bold'>No hay publicaciones</p>
+          </div>}
 
       </div>
     </div>
