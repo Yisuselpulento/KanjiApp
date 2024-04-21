@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Modal from './Modal'
 import Lightbox from './Lightbox'
-import { getUser } from '../services/usersFetch'
+
 import HeartAndReplies from './HeartAndReplies'
 import { calculateTimeSincePost } from '../helpers/TimePostFunction'
 import useAuth from '../hooks/useAuth'
@@ -10,22 +10,7 @@ import DeletePostButton from './DeletePostButton'
 
 const CardPosts = ({ post }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const [user, setUser] = useState({})
   const { auth } = useAuth()
-
-  useEffect(() => {
-    const getUserPerId = async () => {
-      try {
-        const data = await getUser(postedBy)
-        setUser(data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getUserPerId()
-  }, [post])
-
-  const { profilePic, username, _id: userID } = user
 
   const openModal = () => {
     setIsOpen(true)
@@ -34,39 +19,39 @@ const CardPosts = ({ post }) => {
   const closeModal = () => {
     setIsOpen(false)
   }
-  const { text, likes, _id: postiD, replies, postedBy, createdAt, img } = post
-  const isUser = auth._id === postedBy
+  const { text, likes, _id, replies, postedBy, createdAt, img } = post
+  const isUser = auth._id === postedBy._id
 
   return (
     <div className='flex md:gap-5 gap-3 md:p-5 mb-6 '>
       <Link
         className='h-full'
-        to={isUser ? '/profile' : `/user/${userID}`}
+        to={isUser ? '/profile' : `/user/${postedBy?._id}`}
       >
         <img
           className='md:w-16 md:h-16 w-10 h-10 rounded-full mr-4 object-cover'
-          src={profilePic} alt='imagen de usuario'
+          src={postedBy?.profilePic} alt='imagen de usuario'
         />
       </Link>
       <div className='w-full flex flex-col gap-2 '>
         <div className='flex justify-between '>
           <Link
-            to={isUser ? '/profile' : `/user/${userID}`}
+            to={isUser ? '/profile' : `/user/${postedBy?._id}`}
             className='font-bold text-sm md:text-lg'
-          >{username}
+          >{postedBy?.username}
           </Link>
           <div className='flex md:gap-3 gap-1 justify-center items-center'>
             <p className='text-sm text-neutral-600'>Hace {calculateTimeSincePost(createdAt)}</p>
-            {auth._id === postedBy &&
+            {auth._id === postedBy._id &&
               <DeletePostButton
-                postId={postiD}
+                postId={_id}
               />}
 
           </div>
         </div>
         <div className='flex flex-col md:gap-5 gap-3 border-l md:max-w-[600px] w-full'>
           <Link
-            to={`/post/${postiD}`}
+            to={`/post/${_id}`}
             className='dark:bg-bgDark bg-gray-200 md:p-4 p-2 '
           >
             <p>{text}</p>
@@ -80,7 +65,7 @@ const CardPosts = ({ post }) => {
 
         </div>
         <HeartAndReplies
-          postiD={postiD}
+          postiD={_id}
           openModal={openModal}
           likes={likes}
         />

@@ -3,7 +3,6 @@ import { IoClose } from 'react-icons/io5'
 
 function Lightbox ({ photo, alt, style }) {
   const [isOpen, setIsOpen] = useState(false)
-
   const toggleLightbox = () => {
     setIsOpen(!isOpen)
   }

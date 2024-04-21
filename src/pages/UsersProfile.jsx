@@ -26,7 +26,6 @@ const UsersProfile = () => {
           getUser(id),
           FetchGetUserPosts(id)
         ])
-
         setUser(userData)
         setPostsUser(userPostsData)
       } catch (error) {

@@ -1,9 +1,10 @@
 import clienteAxios from '../config/clienteAxios'
 
-const fetchPost = async () => {
+const fetchPostFeed = async () => {
   try {
     const token = window.localStorage.getItem('token')
     if (!token) return
+
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -15,6 +16,7 @@ const fetchPost = async () => {
     return data
   } catch (error) {
     console.log(error)
+    throw new Error('Error fetching posts and users')
   }
 }
 
@@ -110,11 +112,11 @@ const deletePost = async (id) => {
 }
 
 export {
-  fetchPost,
   FetchGetUserPosts,
   fetchPostPage,
   LikeUnlikePost,
   createPost,
-  deletePost
+  deletePost,
+  fetchPostFeed
 
 }

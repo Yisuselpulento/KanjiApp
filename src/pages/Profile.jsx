@@ -6,8 +6,8 @@ import Modal from '../components/Modal'
 import FormEdit from '../components/FormEdit'
 import Lightbox from '../components/Lightbox'
 import useAuth from '../hooks/useAuth'
-import { FetchGetUserPosts } from '../services/postsFetch'
 import Spinner from '../components/Spinner'
+import { FetchGetUserPosts } from '../services/postsFetch'
 
 const Profile = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -29,7 +29,7 @@ const Profile = () => {
       }
     }
     getPostsProfile()
-  }, [posts])
+  }, [])
 
   const openModal = () => {
     setIsOpen(true)
@@ -106,8 +106,8 @@ const Profile = () => {
         <p>Publicaciones</p>
       </div>
       <div>
-        {posts.length
-          ? posts?.map(post =>
+        {posts?.length
+          ? posts.map(post =>
             <CardPosts
               key={post._id}
               post={post}

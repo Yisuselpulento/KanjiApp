@@ -4,7 +4,6 @@ import { Link, useParams } from 'react-router-dom'
 import Modal from '../components/Modal'
 import Comments from '../components/Comments'
 import { fetchPostPage } from '../services/postsFetch'
-import { getUser } from '../services/usersFetch'
 import HeartAndReplies from '../components/HeartAndReplies'
 import { calculateTimeSincePost } from '../helpers/TimePostFunction'
 import useAuth from '../hooks/useAuth'
@@ -18,7 +17,6 @@ const PostsPage = () => {
   const { auth } = useAuth()
 
   const [post, setPost] = useState({})
-  const [user, setUser] = useState({})
 
   const { postId } = useParams()
 
@@ -26,9 +24,8 @@ const PostsPage = () => {
     const fetchData = async () => {
       try {
         const postData = await fetchPostPage(postId)
+        console.log(postData)
         setPost(postData)
-        const userData = await getUser(postData.postedBy)
-        setUser(userData)
       } catch (error) {
         console.error('Error fetching data:', error)
         setLoading(false)
@@ -38,7 +35,7 @@ const PostsPage = () => {
     }
 
     fetchData()
-  }, [postId])
+  }, [])
 
   const openModal = () => {
     setIsOpen(true)
@@ -48,10 +45,9 @@ const PostsPage = () => {
     setIsOpen(false)
   }
 
-  const { text, likes, replies, createdAt, postedBy } = post
-  const { profilePic, username, _id: userID } = user
+  const { text, likes, replies, createdAt, postedBy, img } = post
 
-  const isUser = auth._id === postedBy
+  const isUser = auth._id === postedBy?._id
 
   if (loading) {
     return (
@@ -62,22 +58,23 @@ const PostsPage = () => {
   }
 
   return (
+
     <div className='flex flex-col gap-3 md:w-[800px] justify-center '>
       <div className='flex justify-between items-center'>
         <Link
-          to={isUser ? '/profile' : `/user/${userID}`}
+          to={isUser ? '/profile' : `/user/${postedBy?._id}`}
           className='flex items-center gap-2 font-bold'
         >
           <img
             className='md:w-16 md:h-16 w-10 h-10 rounded-full mr-4 object-cover'
-            src={profilePic} alt='imagen de usuario'
+            src={postedBy?.profilePic} alt='imagen de usuario'
           />
-          <p className='text-lg'>{username}</p>
+          <p className='text-lg'>{postedBy?.username}</p>
         </Link>
         <div className='flex gap-3'>
 
           <p className='dark:text-neutral-600 text-gray-500'>Hace {calculateTimeSincePost(createdAt)}</p>
-          {auth._id === postedBy &&
+          {auth._id === postedBy?._id &&
             <DeletePostButton
               postId={postId}
             />}
@@ -86,11 +83,11 @@ const PostsPage = () => {
       <div className='flex flex-col gap-4 justify-center  dark:bg-bgDark rounded border-x p-4'>
 
         <p>{text} </p>
-        {/*  {img && <Lightbox
+        {img && <Lightbox
           style='rounded'
           photo={img} alt='post imagen de usuario'
                 />}
- */}
+
       </div>
       <div className='flex  flex-col gap-4'>
         <HeartAndReplies
@@ -118,7 +115,7 @@ const PostsPage = () => {
 
       <div>
         {replies
-          ? replies.map(replie =>
+          ? replies?.map(replie =>
             <Comments
               key={replie._id}
               replie={replie}

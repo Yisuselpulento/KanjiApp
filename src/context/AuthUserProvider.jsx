@@ -10,13 +10,6 @@ const AuthUserProvider = ({ children }) => {
 
   const navigate = useNavigate()
 
-  /*  const updateUser = (updatedData) => {
-    setAuth(prevAuth => ({
-      ...prevAuth,
-      ...updatedData
-    }))
-  } */
-
   useEffect(() => {
     const autenticarUsuario = async () => {
       const token = window.localStorage.getItem('token')
@@ -57,7 +50,6 @@ const AuthUserProvider = ({ children }) => {
         setAuth,
         cargando,
         cerrarSesionAuth
-        /* updateUser */
 
       }}
     >

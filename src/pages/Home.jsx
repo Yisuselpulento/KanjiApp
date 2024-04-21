@@ -1,6 +1,6 @@
 import CardPosts from '../components/CardPosts'
 import { useEffect, useState } from 'react'
-import { fetchPost } from '../services/postsFetch'
+import { fetchPostFeed } from '../services/postsFetch'
 import Spinner from '../components/Spinner'
 
 const Home = () => {
@@ -10,7 +10,7 @@ const Home = () => {
   useEffect(() => {
     const getFeedPost = async () => {
       try {
-        const data = await fetchPost()
+        const data = await fetchPostFeed()
         setFeedPosts(data)
       } catch (error) {
         console.log(error)
