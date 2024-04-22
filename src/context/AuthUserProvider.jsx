@@ -6,7 +6,9 @@ const AuthUserContext = createContext({})
 
 const AuthUserProvider = ({ children }) => {
   const [auth, setAuth] = useState({})
-  const [cargando, setCargando] = useState(true)
+  const [cargando, setLoading] = useState(true)
+  const [posts, setPosts] = useState([])
+  const [comments, setComments] = useState([])
 
   const navigate = useNavigate()
 
@@ -14,7 +16,7 @@ const AuthUserProvider = ({ children }) => {
     const autenticarUsuario = async () => {
       const token = window.localStorage.getItem('token')
       if (!token) {
-        setCargando(false)
+        setLoading(false)
         return
       }
 
@@ -34,7 +36,7 @@ const AuthUserProvider = ({ children }) => {
         setAuth({})
       }
 
-      setCargando(false)
+      setLoading(false)
     }
     autenticarUsuario()
   }, [])
@@ -49,7 +51,11 @@ const AuthUserProvider = ({ children }) => {
         auth,
         setAuth,
         cargando,
-        cerrarSesionAuth
+        cerrarSesionAuth,
+        posts,
+        setPosts,
+        setComments,
+        comments
 
       }}
     >

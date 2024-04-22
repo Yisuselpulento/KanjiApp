@@ -19,7 +19,7 @@ const PostsPage = () => {
   const [postText, setPostText] = useState('')
   const [alert, setAlert] = useState({})
 
-  const { auth } = useAuth()
+  const { auth, comments } = useAuth()
 
   const [post, setPost] = useState({})
 

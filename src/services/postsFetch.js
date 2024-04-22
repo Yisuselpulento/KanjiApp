@@ -124,8 +124,7 @@ const createReplies = async (id, replieInfo) => {
     }
 
     const { data } = await clienteAxios.post(`/posts/create/${id}`, replieInfo, config)
-
-    return data
+    return data.reply
   } catch (error) {
     console.log(error)
   }

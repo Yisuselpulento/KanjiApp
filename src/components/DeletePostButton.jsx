@@ -4,15 +4,21 @@ import Modal from './Modal'
 import { useState } from 'react'
 import Spinner from './Spinner'
 import { toast } from 'react-toastify'
+import useAuth from '../hooks/useAuth'
 
 const DeletePostButton = ({ postId }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
+  const { posts, setPosts } = useAuth()
+
   const handleDelete = async () => {
     try {
       setLoading(true)
       await deletePost(postId)
+      const updatedProducts = posts?.filter(post => post._id !== postId)
+      console.log(updatedProducts)
+      setPosts(updatedProducts)
       toast.success('Eliminado Correctamente')
       closeModal()
     } catch (error) {

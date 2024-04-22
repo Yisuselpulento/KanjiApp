@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { FaRegHeart, FaHeart, FaRegComment } from 'react-icons/fa'
 import useAuth from '../hooks/useAuth'
 import { LikeUnlikePost } from '../services/postsFetch'
-import ReplieButton from './ReplieButton'
 
 const HeartAndReplies = ({ openModal, postiD, likes }) => {
   const [liked, setliked] = useState(false)
@@ -28,9 +27,11 @@ const HeartAndReplies = ({ openModal, postiD, likes }) => {
         onClick={handleToggleHeart}
       >{liked ? <FaHeart className='md:w-6 md:h-6 w-5 h-5 text-red-500 ' /> : <FaRegHeart className='md:w-6 md:h-6 w-5 h-5 ' />}
       </button>
-      <ReplieButton
-        openModal={openModal}
-      />
+      <button><FaRegComment
+        onClick={openModal}
+        className='md:w-6 md:h-6 w-5 h-5'
+              />
+      </button>
     </div>
   )
 }

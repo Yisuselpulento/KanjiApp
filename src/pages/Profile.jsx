@@ -11,10 +11,9 @@ import { FetchGetUserPosts } from '../services/postsFetch'
 
 const Profile = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
 
-  const { auth } = useAuth()
+  const { auth, posts, setPosts } = useAuth()
 
   useEffect(() => {
     const getPostsProfile = async () => {

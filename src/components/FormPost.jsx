@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { createPost } from '../services/postsFetch'
+import { createPost, FetchGetUserPosts } from '../services/postsFetch'
 import useAuth from '../hooks/useAuth'
 import Spinner from './Spinner'
 import Alert from './Alert'
@@ -7,7 +7,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 
 const FormPost = ({ closeModal }) => {
-  const { auth } = useAuth()
+  const { auth, setPosts } = useAuth()
   const [postText, setPostText] = useState('')
   const [loading, setLoading] = useState(false)
   const [alert, setAlert] = useState({})
@@ -40,7 +40,6 @@ const FormPost = ({ closeModal }) => {
         const res = await axios.post(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME}/image/upload`, formData)
 
         imageUrl = res.data.secure_url
-        console.log(res.data.secure_url)
       }
 
       setLoading(true)
@@ -49,6 +48,8 @@ const FormPost = ({ closeModal }) => {
         postedBy: userId,
         img: imageUrl
       })
+      const newPost = await FetchGetUserPosts(auth._id)
+      setPosts(newPost)
       closeModal()
       toast.success('Post Creado Correctamente')
       setPostText('')

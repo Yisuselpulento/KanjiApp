@@ -9,6 +9,7 @@ import Profile from './pages/Profile'
 import { ThemeProvider } from './context/ThemeProvider'
 import PostsPage from './pages/PostsPage'
 import { AuthUserProvider } from './context/AuthUserProvider'
+import NotFound from './pages/NotFound'
 
 export default function App () {
   return (
@@ -31,6 +32,8 @@ export default function App () {
             <Route path='/signup' element={<LayoutLogin />}>
               <Route index element={<SignUp />} />
             </Route>
+
+            <Route path='*' element={<NotFound />} />
           </Routes>
         </ThemeProvider>
       </AuthUserProvider>
