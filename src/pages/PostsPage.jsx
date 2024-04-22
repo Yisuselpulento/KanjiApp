@@ -19,7 +19,7 @@ const PostsPage = () => {
   const [postText, setPostText] = useState('')
   const [alert, setAlert] = useState({})
 
-  const { auth, comments } = useAuth()
+  const { auth } = useAuth()
 
   const [post, setPost] = useState({})
 
@@ -49,9 +49,9 @@ const PostsPage = () => {
     setIsOpen(false)
   }
 
-  const { text, likes, replies, createdAt, postedBy, img } = post
+  const { text, likes, replies, createdAt, author, img, numberOfLikes, numberOfReplies } = post
 
-  const isUser = auth._id === postedBy?._id
+  const isUser = auth._id === author?._id
 
   if (loading) {
     return (
@@ -95,21 +95,21 @@ const PostsPage = () => {
     <div className='flex flex-col gap-3 md:w-[800px] justify-center '>
       <div className='flex justify-between items-center'>
         <Link
-          to={isUser ? '/profile' : `/user/${postedBy?._id}`}
+          to={isUser ? '/profile' : `/user/${author?._id}`}
           className='flex items-center gap-2 font-bold'
         >
           <img
             className='md:w-16 md:h-16 w-10 h-10 rounded-full mr-4 object-cover'
-            src={postedBy?.profilePic} alt='imagen de usuario'
+            src={author?.profilePic} alt='imagen de usuario'
           />
-          <p className='text-lg'>{postedBy?.username}</p>
+          <p className='text-lg'>{author?.username}</p>
         </Link>
         <div className='flex gap-3'>
 
           <p className='dark:text-neutral-600 text-gray-500'>Hace {calculateTimeSincePost(createdAt)}</p>
-          {auth._id === postedBy?._id &&
+          {auth._id === author?._id &&
             <DeletePostButton
-              postId={postId}
+              postId={author}
             />}
         </div>
       </div>
@@ -129,9 +129,9 @@ const PostsPage = () => {
           likes={likes}
         />
         <div className='flex gap-4 text-neutral-600'>
-          <p>{replies?.length} {replies?.length === 1 ? 'comentario' : 'comentarios'}</p>
+          <p>{numberOfReplies} {numberOfReplies === 1 ? 'comentario' : 'comentarios'}</p>
           <p>.</p>
-          <p>{likes?.length} Likes</p>
+          <p>{numberOfLikes} {numberOfLikes === 1 ? 'Like' : 'Likes'}</p>
         </div>
 
       </div>

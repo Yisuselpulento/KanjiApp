@@ -8,7 +8,6 @@ const AuthUserProvider = ({ children }) => {
   const [auth, setAuth] = useState({})
   const [cargando, setLoading] = useState(true)
   const [posts, setPosts] = useState([])
-  const [comments, setComments] = useState([])
 
   const navigate = useNavigate()
 
@@ -53,9 +52,7 @@ const AuthUserProvider = ({ children }) => {
         cargando,
         cerrarSesionAuth,
         posts,
-        setPosts,
-        setComments,
-        comments
+        setPosts
 
       }}
     >

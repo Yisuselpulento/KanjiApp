@@ -20,30 +20,30 @@ const CardPosts = ({ post }) => {
   const closeModal = () => {
     setIsOpen(false)
   }
-  const { text, likes, _id, replies, postedBy, createdAt, img } = post
-  const isUser = auth._id === postedBy._id
+  const { text, likes, _id, author, createdAt, img, numberOfLikes, numberOfReplies } = post
+  const isUser = auth._id === author._id
 
   return (
     <div className='flex md:gap-5 gap-3 md:p-5 mb-6 '>
       <Link
         className='h-full'
-        to={isUser ? '/profile' : `/user/${postedBy?._id}`}
+        to={isUser ? '/profile' : `/user/${author?._id}`}
       >
         <img
           className='md:w-16 md:h-16 w-10 h-10 rounded-full mr-4 object-cover'
-          src={postedBy?.profilePic} alt='imagen de usuario'
+          src={author?.profilePic} alt='imagen de usuario'
         />
       </Link>
       <div className='w-full flex flex-col gap-2 '>
         <div className='flex justify-between '>
           <Link
-            to={isUser ? '/profile' : `/user/${postedBy?._id}`}
+            to={isUser ? '/profile' : `/user/${author?._id}`}
             className='font-bold text-sm md:text-lg'
-          >{postedBy?.username}
+          >{author?.username}
           </Link>
           <div className='flex md:gap-3 gap-1 justify-center items-center'>
             <p className='text-sm text-neutral-600'>Hace {calculateTimeSincePost(createdAt)}</p>
-            {auth._id === postedBy._id &&
+            {auth._id === author._id &&
               <DeletePostButton
                 postId={_id}
               />}
@@ -72,9 +72,9 @@ const CardPosts = ({ post }) => {
         />
 
         <div className='flex gap-5 text-neutral-600'>
-          <p>{replies.length} {replies.length === 1 ? 'comentario' : 'comentarios'}</p>
+          <p>{numberOfReplies} {numberOfReplies === 1 ? 'comentario' : 'comentarios'}</p>
           <p>.</p>
-          <p>{likes.length} Likes</p>
+          <p>{numberOfLikes} {numberOfLikes === 1 ? 'Like' : 'Likes'}</p>
         </div>
       </div>
       <Modal isOpen={isOpen} onClose={closeModal}>
