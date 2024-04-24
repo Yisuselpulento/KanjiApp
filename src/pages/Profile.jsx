@@ -61,7 +61,7 @@ const Profile = () => {
           <div className='flex flex-col gap-5 md:max-w-[500px] max-w-[200px]'>
             <p className='h-[60px]'>{bio || 'Usuario de KanjiApp'}</p>
             <div className='flex  gap-4'>
-              <div>
+              <div className='font-bold text-gray-700 dark:text-gray-300'>
                 <p>Edad :</p>
                 <p>Pais :</p>
                 <p>Sexo :</p>
@@ -77,7 +77,7 @@ const Profile = () => {
 
             <button
               onClick={openModal}
-              className='dark:bg-hoverDark bg-hoverLight hover:bg-gray-400 p-2 rounded dark:hover:bg-stone-900 md:w-48  w-24'
+              className='dark:bg-hoverDark bg-hoverLight hover:bg-gray-400 p-2 rounded dark:hover:bg-stone-900 md:w-48  w-[100px] dark:border border-blue-700'
             >Editar Perfil
             </button>
           </div>
@@ -95,9 +95,9 @@ const Profile = () => {
           <p>{followers?.length === 1 ? `${followers?.length} Seguidor` : `${followers?.length} Seguidores`} </p>
           <p>{following?.length === 1 ? `${following?.length} Seguido` : `${following?.length} Seguidos`} </p>
         </div>
-        <div className='flex gap-5'>
+        <div className='mr-4'>
           <FaInstagram className='md:w-9 md:h-9 w-7 h-7' />
-          <IoEllipsisHorizontalCircleOutline className='md:w-9 md:h-9 w-7 h-7' />
+
         </div>
       </div>
       <div className='border-b text-center p-4'>

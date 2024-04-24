@@ -20,8 +20,7 @@ const Comments = ({ replie, postid, updateReplies }) => {
       updateReplies(_id)
       toast.success('Eliminado Correctamente')
     } catch (error) {
-      setLoading(false)
-      toast.success('Error al borrar el comentario')
+      toast.error(error.response.data.message)
       console.error('Error al borrar el post:', error)
     } finally {
       setLoading(false)

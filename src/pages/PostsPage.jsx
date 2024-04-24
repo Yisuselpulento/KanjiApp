@@ -11,6 +11,7 @@ import DeletePostButton from '../components/DeletePostButton'
 import Spinner from '../components/Spinner'
 import { toast } from 'react-toastify'
 import FormReplies from '../components/FormReplies'
+import Alert from '../components/Alert'
 
 const PostsPage = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -79,10 +80,12 @@ const PostsPage = () => {
       setRepliesState(prevReplies => [...prevReplies, newReplie.newReply])
       toast.success(newReplie.message)
       setPostText('')
+      setAlert({})
     } catch (error) {
-      setLoading(false)
-      toast.error('Ha ocurrido un error')
       console.error('Error al crear el post:', error)
+      toast.error(error.response.data.message)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -153,7 +156,7 @@ const PostsPage = () => {
         >Post
         </button>
       </form>
-
+      {alert.msg && <Alert alert={alert} />}
       <div>
         {repliesState
           ? (

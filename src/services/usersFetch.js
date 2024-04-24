@@ -30,10 +30,10 @@ const followUnfollowFetch = async (id) => {
     }
 
     const { data } = await clienteAxios.post(`/users/follow/${id}`, {}, config)
-    console.log(data)
     return data
   } catch (error) {
-    console.log(error)
+    console.log('error:', error.message)
+    throw error
   }
 }
 
@@ -51,7 +51,8 @@ const updateUser = async (formData, id) => {
     const { data } = await clienteAxios.put(`/users/update/${id}`, formData, config)
     return data
   } catch (error) {
-    console.log(error)
+    console.log('error:', error.message)
+    throw error
   }
 }
 

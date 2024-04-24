@@ -15,8 +15,8 @@ const fetchPostFeed = async () => {
     const { data } = await clienteAxios('/posts/feed', config)
     return data
   } catch (error) {
-    console.log(error)
-    throw new Error('Error fetching posts and users')
+    console.log('error:', error.message)
+    throw error
   }
 }
 
@@ -34,7 +34,8 @@ const FetchGetUserPosts = async (id) => {
     const { data } = await clienteAxios(`/posts/user/${id}`, config)
     return data
   } catch (error) {
-    console.log(error)
+    console.log('error:', error.message)
+    throw error
   }
 }
 
@@ -70,7 +71,8 @@ const LikeUnlikePost = async (id) => {
     const { data } = await clienteAxios.put(`/posts/like/${id}`, {}, config)
     return data
   } catch (error) {
-    console.log(error)
+    console.log('error:', error.message)
+    throw error
   }
 }
 
@@ -89,7 +91,8 @@ const createPost = async (form) => {
     console.log(data)
     return data
   } catch (error) {
-    console.log(error)
+    console.log('error:', error.message)
+    throw error
   }
 }
 
@@ -108,7 +111,8 @@ const deletePost = async (id) => {
 
     return data
   } catch (error) {
-    console.log(error)
+    console.log('error:', error.message)
+    throw error
   }
 }
 
@@ -126,7 +130,8 @@ const createReplies = async (id, replieInfo) => {
     const { data } = await clienteAxios.post(`/posts/create/${id}`, replieInfo, config)
     return data
   } catch (error) {
-    console.log(error)
+    console.log('error:', error.message)
+    throw error
   }
 }
 
@@ -144,7 +149,8 @@ const deleteReplie = async (postId, id) => {
     const { data } = await clienteAxios.delete(`/posts/${postId}/${id}`, config)
     return data
   } catch (error) {
-    console.log(error)
+    console.log('error:', error.message)
+    throw error
   }
 }
 

@@ -48,7 +48,7 @@ const Layout = () => {
               <div className='flex gap-3 items-center justify-center'>
                 <NavLink
                   className={({ isActive }) =>
-                    isActive ? 'dark:hover:bg-stone-800 hover:bg-gray-300 rounded-full md:p-2 p-1 bg-hoverLight dark:bg-hoverDark' : 'dark:hover:bg-stone-800 hover:bg-gray-300  md:p-2 p-1 rounded-full '}
+                    isActive ? 'dark:hover:bg-stone-800 hover:bg-gray-300 rounded-full md:p-2 p-1 bg-hoverLight dark:bg-hoverDark text-blue-600' : 'dark:hover:bg-stone-800 hover:bg-gray-300  md:p-2 p-1 rounded-full '}
                   to='/chat'
                 >
 
@@ -77,17 +77,17 @@ const Layout = () => {
       <footer className='flex items-center justify-center dark:bg-bgDark border-t border-gray-100 h-[100px] bg-gray-200'>
         <ToastContainer
           theme='colored'
-          autoClose={3000}
+          autoClose={2000}
           position='bottom-center'
-          className='px-10 rounded'
+          className='px-10  w-[400px] p-2'
         />
         FOOTER
       </footer>
       <button
         onClick={openModal}
-        className='dark:bg-stone-800 dark:hover:bg-stone-900 bg-gray-300 hover:bg-gray-400 md:p-2 rounded fixed md:bottom-4 md:right-4 bottom-2 right-2'
+        className='dark:bg-stone-800 dark:hover:bg-stone-900 bg-blue-700 hover:bg-gray-400 md:p-2 rounded fixed md:bottom-4 md:right-4 bottom-2 right-2'
       >
-        <IoIosAdd className='font-bold w-8 h-8' />
+        <IoIosAdd className='font-bold w-8 h-8  text-gray-300' />
       </button>
       <Modal isOpen={isOpen} onClose={closeModal}>
         <FormPost

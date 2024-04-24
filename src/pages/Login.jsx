@@ -53,12 +53,12 @@ const Login = () => {
   }
   return (
     <div className='flex justify-center items-center h-screen'>
-      <div className='dark:bg-stone-900 bg-gray-200 w-full rounded p-10 md:p-14 md:w-[500px] flex flex-col gap-4 dark:text-indigo-100 '>
-        <div>
-          <p className='text-3xl font-bold'>Inicia sesion</p>
+      <div className='dark:bg-stone-900 bg-gray-200 w-[330px] rounded p-8 md:p-14 md:w-[500px] flex flex-col gap-4 dark:text-indigo-100 '>
+        <div className='flex justify-center'>
+          <p className='md:text-3xl text-xl font-bold'>Inicia sesion</p>
         </div>
         <form
-          className='  flex flex-col gap-8 shadow-lg  '
+          className='  flex flex-col gap-5 md:gap-8 shadow-lg  '
           onSubmit={handleSubmit}
         >
           <div className='dark:text-indigo-100 text-gray-500'>
@@ -86,7 +86,7 @@ const Login = () => {
 
           <input
             to='/'
-            className='bg-slate-700 hover:bg-slate-800 uppercase p-4 w-full font-bold text-lg text-white text-center'
+            className='bg-blue-700 hover:bg-blue-800 uppercase cursor-pointer p-3 md:p-4 w-full font-bold md:text-lg text-md text-white text-center'
             type='submit'
             value='Entrar'
           />

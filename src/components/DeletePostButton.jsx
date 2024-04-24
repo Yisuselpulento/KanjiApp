@@ -17,14 +17,12 @@ const DeletePostButton = ({ postId }) => {
       setLoading(true)
       await deletePost(postId)
       const updatedProducts = posts?.filter(post => post._id !== postId)
-      console.log(updatedProducts)
       setPosts(updatedProducts)
       toast.success('Eliminado Correctamente')
       closeModal()
     } catch (error) {
       console.log(error)
-      toast.error('Ha ocurrido un error')
-      setLoading(false)
+      toast.error(error.response.data.message)
     } finally {
       setLoading(false)
     }

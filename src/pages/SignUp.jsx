@@ -60,7 +60,7 @@ const SignUp = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(formDataToSend.email)) {
       setAlert({
-        msg: 'Email no es válido',
+        msg: 'Email no válido',
         error: true
       })
       return
@@ -73,6 +73,12 @@ const SignUp = () => {
         msg: data.msg,
         error: false
       })
+      setFormData({
+        username: '',
+        password: '',
+        repeatPassword: '',
+        email: ''
+      })
     } catch (error) {
       console.log(error)
       setAlert({
@@ -83,13 +89,13 @@ const SignUp = () => {
   }
 
   return (
-    <div className='flex justify-center items-center h-full my-10'>
-      <div className='dark:bg-stone-900 bg-gray-200 w-full rounded p-10 md:p-14 md:w-[500px] flex flex-col gap-4 dark:text-indigo-100 '>
+    <div className='flex justify-center items-center w-[350px] md:w-full h-full my-10'>
+      <div className='dark:bg-stone-900 bg-gray-200 w-full  rounded p-8 md:p-14 md:w-[500px] flex flex-col gap-3 md:gap-4 dark:text-indigo-100 '>
         <div>
           <p>Bienvenido a KanjiApp</p>
-          <p className='text-3xl font-bold'>Create una cuenta</p>
+          <p className='md:text-3xl text-xl font-bold'>Create una cuenta</p>
         </div>
-        <form className='flex flex-col gap-8 shadow-lg ' onSubmit={handleSubmit}>
+        <form className='flex flex-col md:gap-8 gap-4 shadow-lg ' onSubmit={handleSubmit}>
           <div className='dark:text-indigo-100 text-gray-500'>
             <label className='block pb-2'>Usuario</label>
             <input
@@ -135,7 +141,7 @@ const SignUp = () => {
             />
           </div>
           <input
-            className='bg-slate-700 hover:bg-slate-800 uppercase p-4 w-full font-bold text-lg text-white'
+            className='bg-blue-700 hover:bg-blue-800 cursor-pointer uppercase p-3 md:p-4 w-full font-bold md:text-lg text-md text-white'
             type='submit'
             value='Registrar'
           />

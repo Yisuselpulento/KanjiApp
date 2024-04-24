@@ -44,7 +44,6 @@ const FormEdit = ({ closeModal }) => {
         const res = await axios.post(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUD_NAME}/image/upload`, formData)
 
         imageUrl = res.data.secure_url
-        console.log(res.data.secure_url)
       }
 
       setLoading(true)
@@ -62,9 +61,8 @@ const FormEdit = ({ closeModal }) => {
       toast.success('Datos actualizados correctamente')
       setImage(null)
     } catch (error) {
-      toast.error('Ha ocurrido un error')
       console.log(error)
-      setLoading(false)
+      toast.error(error.response.data.error)
     } finally {
       setLoading(false)
     }

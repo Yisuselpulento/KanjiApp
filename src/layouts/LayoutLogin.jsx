@@ -22,10 +22,10 @@ const LayoutLogin = () => {
           </NavLink>
         </nav>
       </header>
-      <main className='min-h-screen'>
+      <main className='min-h-screen w-full items-center flex justify-center'>
         <Outlet />
       </main>
-      <footer className='flex items-center justify-center dark:bg-stone-900 h-[100px] bg-gray-200'>
+      <footer className='flex items-center justify-center dark:bg-bgDark border-t border-gray-100 h-[100px] bg-gray-200'>
         FOOTER
       </footer>
     </div>

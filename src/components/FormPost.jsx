@@ -22,13 +22,13 @@ const FormPost = ({ closeModal }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!postText.trim()) {
+    /* if (!postText.trim()) {
       setAlert({
         msg: 'No hay nada escrito',
         error: true
       })
       return
-    }
+    } */
     try {
       let imageUrl = ''
 
@@ -56,7 +56,7 @@ const FormPost = ({ closeModal }) => {
       setImage(null)
     } catch (error) {
       setLoading(false)
-      toast.error('Ha ocurrido un error')
+      toast.error(error.response.data.error)
       console.error('Error al crear el post:', error)
     } finally {
       setLoading(false)
