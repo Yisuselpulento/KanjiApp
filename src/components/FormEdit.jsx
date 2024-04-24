@@ -7,7 +7,7 @@ import Countries from '../helpers/Countries.json'
 import { toast } from 'react-toastify'
 
 const FormEdit = ({ closeModal }) => {
-  const { auth } = useAuth()
+  const { auth, setAuth } = useAuth()
   const { profilePic } = auth
 
   const [loading, setLoading] = useState(false)
@@ -50,7 +50,9 @@ const FormEdit = ({ closeModal }) => {
       setLoading(true)
       const userData = { ...formData, profilePic: imageUrl }
       console.log(userData)
-      await updateUser(userData, auth._id)
+      const newDataUser = await updateUser(userData, auth._id)
+      console.log(newDataUser)
+      setAuth(newDataUser)
       setFormData({
         age: '',
         sexo: '',

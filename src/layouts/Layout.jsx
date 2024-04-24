@@ -11,6 +11,7 @@ import FormPost from '../components/FormPost'
 import SearchBar from '../components/SearchBar'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { IoChatbubbleEllipsesOutline } from 'react-icons/io5'
 
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -44,7 +45,15 @@ const Layout = () => {
               </NavLink>
               <ButtonTheme />
               <SearchBar />
-              <div className='flex gap-3'>
+              <div className='flex gap-3 items-center justify-center'>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? 'dark:hover:bg-stone-800 hover:bg-gray-300 rounded-full md:p-2 p-1 bg-hoverLight dark:bg-hoverDark' : 'dark:hover:bg-stone-800 hover:bg-gray-300  md:p-2 p-1 rounded-full '}
+                  to='/chat'
+                >
+
+                  <IoChatbubbleEllipsesOutline className='md:w-7 md:h-7 w-6 h-6 ' />
+                </NavLink>
                 <NavLink
                   className={({ isActive }) =>
                     isActive ? 'dark:hover:bg-stone-800 hover:bg-gray-300 rounded-full md:p-3 p-2 bg-hoverLight dark:bg-hoverDark' : 'dark:hover:bg-stone-800 hover:bg-gray-300  md:p-3 p-2 rounded-full '}

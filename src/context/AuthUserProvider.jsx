@@ -53,7 +53,6 @@ const AuthUserProvider = ({ children }) => {
         cerrarSesionAuth,
         posts,
         setPosts
-
       }}
     >
       {children}

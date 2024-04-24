@@ -10,6 +10,8 @@ import { ThemeProvider } from './context/ThemeProvider'
 import PostsPage from './pages/PostsPage'
 import { AuthUserProvider } from './context/AuthUserProvider'
 import NotFound from './pages/NotFound'
+import Chat from './pages/Chat'
+import ChatUser from './pages/ChatUser'
 
 export default function App () {
   return (
@@ -22,6 +24,8 @@ export default function App () {
               <Route path='profile' element={<Profile />} />
               <Route path='post/:postId' element={<PostsPage />} />
               <Route path='user/:id' element={<UsersProfile />} />
+              <Route path='chat' element={<Chat />} />
+              <Route path='chat/:idUser' element={<ChatUser />} />
             </Route>
 
             <Route path='/login' element={<LayoutLogin />}>

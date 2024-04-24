@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import useAuth from '../hooks/useAuth'
 import { toast } from 'react-toastify'
 import { createReplies } from '../services/postsFetch'
 
@@ -7,8 +6,6 @@ const FormReplies = ({ postId }) => {
   const [postText, setPostText] = useState('')
   const [alert, setAlert] = useState({})
   const [loading, setLoading] = useState(true)
-
-  const { auth } = useAuth()
 
   const handlePostReplie = async (e) => {
     e.preventDefault()
@@ -22,8 +19,7 @@ const FormReplies = ({ postId }) => {
 
     try {
       const replieInfo = {
-        text: postText,
-        postedBy: auth._id
+        text: postText
       }
       await createReplies(postId, replieInfo)
       toast.success('Comentario Creado Correctamente')

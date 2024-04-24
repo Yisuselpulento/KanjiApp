@@ -15,13 +15,12 @@ import FormReplies from '../components/FormReplies'
 const PostsPage = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(true)
-
   const [postText, setPostText] = useState('')
   const [alert, setAlert] = useState({})
-
   const { auth } = useAuth()
-
   const [post, setPost] = useState({})
+
+  const [repliesState, setRepliesState] = useState([])
 
   const { postId } = useParams()
 
@@ -29,6 +28,7 @@ const PostsPage = () => {
     const fetchData = async () => {
       try {
         const postData = await fetchPostPage(postId)
+        setRepliesState(postData.replies)
         setPost(postData)
       } catch (error) {
         console.error('Error fetching data:', error)
@@ -49,7 +49,7 @@ const PostsPage = () => {
     setIsOpen(false)
   }
 
-  const { text, likes, replies, createdAt, author, img, numberOfLikes, numberOfReplies } = post
+  const { text, likes, createdAt, author, img, numberOfLikes, numberOfReplies } = post
 
   const isUser = auth._id === author?._id
 
@@ -73,11 +73,11 @@ const PostsPage = () => {
 
     try {
       const replieInfo = {
-        text: postText,
-        postedBy: auth._id
+        text: postText
       }
-      await createReplies(postId, replieInfo)
-      toast.success('Comentario Creado Correctamente')
+      const newReplie = await createReplies(postId, replieInfo)
+      setRepliesState(prevReplies => [...prevReplies, newReplie.newReply])
+      toast.success(newReplie.message)
       setPostText('')
     } catch (error) {
       setLoading(false)
@@ -88,6 +88,10 @@ const PostsPage = () => {
 
   const handleTextChange = (e) => {
     setPostText(e.target.value)
+  }
+
+  const updateReplies = (deletedReplyId) => {
+    setRepliesState(prevReplies => prevReplies.filter(reply => reply._id !== deletedReplyId))
   }
 
   return (
@@ -127,12 +131,9 @@ const PostsPage = () => {
           postiD={postId}
           openModal={openModal}
           likes={likes}
+          numberOfReplies={numberOfReplies}
+          numberOfLikes={numberOfLikes}
         />
-        <div className='flex gap-4 text-neutral-600'>
-          <p>{numberOfReplies} {numberOfReplies === 1 ? 'comentario' : 'comentarios'}</p>
-          <p>.</p>
-          <p>{numberOfLikes} {numberOfLikes === 1 ? 'Like' : 'Likes'}</p>
-        </div>
 
       </div>
       <form
@@ -154,15 +155,18 @@ const PostsPage = () => {
       </form>
 
       <div>
-        {replies
-          ? replies?.map(replie =>
-            <Comments
-              key={replie._id}
-              replie={replie}
-              postid={postId}
-            />
-          )
-          : <p>Aun no tienes comentarios</p>}
+        {repliesState
+          ? (
+              repliesState?.map((replie) => (
+                <Comments
+                  updateReplies={updateReplies}
+                  key={replie._id} replie={replie} postid={postId}
+                />
+              ))
+            )
+          : (
+            <p>Aun no tienes comentarios</p>
+            )}
       </div>
       <Modal isOpen={isOpen} onClose={closeModal}>
         <FormReplies

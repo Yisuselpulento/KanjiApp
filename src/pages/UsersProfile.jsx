@@ -1,8 +1,8 @@
 import { FaInstagram } from 'react-icons/fa'
 import CardPosts from '../components/CardPosts'
-import { IoEllipsisHorizontalCircleOutline } from 'react-icons/io5'
+import { IoChatbubbleEllipsesOutline, IoEllipsisHorizontalCircleOutline } from 'react-icons/io5'
 import Lightbox from '../components/Lightbox'
-import { useParams } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { getUser } from '../services/usersFetch'
 import { useState, useEffect } from 'react'
 import { FetchGetUserPosts } from '../services/postsFetch'
@@ -97,7 +97,14 @@ const UsersProfile = () => {
         </div>
         <div className='flex gap-5'>
           <FaInstagram className='md:w-9 md:h-9 w-7 h-7' />
-          <IoEllipsisHorizontalCircleOutline className='md:w-9 md:h-9 w-7 h-7' />
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? 'dark:hover:bg-stone-800 hover:bg-gray-300 rounded-full md:p-2 p-1 bg-hoverLight dark:bg-hoverDark' : 'dark:hover:bg-stone-800 hover:bg-gray-300  md:p-2 p-1 rounded-full '}
+            to={`/chat/${id}`}
+          >
+
+            <IoChatbubbleEllipsesOutline className='md:w-7 md:h-7 w-6 h-6 ' />
+          </NavLink>
         </div>
       </div>
       <div className='border-b text-center p-4'>

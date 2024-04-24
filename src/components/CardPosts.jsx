@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Modal from './Modal'
 import Lightbox from './Lightbox'
-
 import HeartAndReplies from './HeartAndReplies'
 import { calculateTimeSincePost } from '../helpers/TimePostFunction'
 import useAuth from '../hooks/useAuth'
@@ -13,6 +12,10 @@ const CardPosts = ({ post }) => {
   const [isOpen, setIsOpen] = useState(false)
   const { auth } = useAuth()
 
+  const { text, likes, _id, author, createdAt, img, numberOfReplies, numberOfLikes } = post
+
+  const isUser = auth._id === author._id
+
   const openModal = () => {
     setIsOpen(true)
   }
@@ -20,8 +23,6 @@ const CardPosts = ({ post }) => {
   const closeModal = () => {
     setIsOpen(false)
   }
-  const { text, likes, _id, author, createdAt, img, numberOfLikes, numberOfReplies } = post
-  const isUser = auth._id === author._id
 
   return (
     <div className='flex md:gap-5 gap-3 md:p-5 mb-6 '>
@@ -69,13 +70,10 @@ const CardPosts = ({ post }) => {
           postiD={_id}
           openModal={openModal}
           likes={likes}
-        />
+          numberOfReplies={numberOfReplies}
+          numberOfLikes={numberOfLikes}
 
-        <div className='flex gap-5 text-neutral-600'>
-          <p>{numberOfReplies} {numberOfReplies === 1 ? 'comentario' : 'comentarios'}</p>
-          <p>.</p>
-          <p>{numberOfLikes} {numberOfLikes === 1 ? 'Like' : 'Likes'}</p>
-        </div>
+        />
       </div>
       <Modal isOpen={isOpen} onClose={closeModal}>
         <FormReplies

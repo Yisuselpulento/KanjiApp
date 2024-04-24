@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import { useState } from 'react'
 import Spinner from './Spinner'
 
-const Comments = ({ replie, postid }) => {
+const Comments = ({ replie, postid, updateReplies }) => {
   const { auth } = useAuth()
   const { text, userId, _id } = replie
   const [loading, setLoading] = useState(false)
@@ -17,6 +17,7 @@ const Comments = ({ replie, postid }) => {
     try {
       setLoading(true)
       await deleteReplie(postid, _id)
+      updateReplies(_id)
       toast.success('Eliminado Correctamente')
     } catch (error) {
       setLoading(false)
@@ -29,7 +30,7 @@ const Comments = ({ replie, postid }) => {
 
   return (
     <div className='flex gap-3 py-6 border-t border-neutral-800'>
-      <Link to={isUser ? '/profile' : `/user/${userId?._id}`}>
+      <Link to={isUser ? '/profile' : `/user/${userId._id}`}>
         <img
           className='md:w-16 md:h-16 w-10 h-10 rounded-full mr-4 object-cover'
           src={userId.profilePic}
@@ -37,7 +38,7 @@ const Comments = ({ replie, postid }) => {
       </Link>
       <div className='flex flex-col gap-2 w-full'>
         <div className='flex justify-between '>
-          <Link to={isUser ? '/profile' : `/user/${userId?._id}`} className='text-md font-bold'>
+          <Link to={isUser ? '/profile' : `/user/${userId._id}`} className='text-md font-bold'>
             {userId.username}
           </Link>
           {isUser && (
