@@ -30,11 +30,11 @@ const HeartAndReplies = ({ openModal, postiD, likes, numberOfReplies, numberOfLi
       <div className='flex gap-4'>
         <button
           onClick={handleToggleHeart}
-        >{liked ? <FaHeart className='md:w-6 md:h-6 w-5 h-5 text-red-500 ' /> : <FaRegHeart className='md:w-6 md:h-6 w-5 h-5 ' />}
+        >{liked ? <FaHeart className='md:w-6 md:h-6 w-5 h-5 text-red-500 ' /> : <FaRegHeart className='md:w-6 md:h-6 w-5 h-5 dark:hover:text-gray-700 hover:text-blue-700' />}
         </button>
         <button><FaRegComment
           onClick={openModal}
-          className='md:w-6 md:h-6 w-5 h-5'
+          className='md:w-6 md:h-6 w-5 h-5 dark:hover:text-gray-700 hover:text-blue-700'
                 />
         </button>
 

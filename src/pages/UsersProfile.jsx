@@ -50,6 +50,10 @@ const UsersProfile = () => {
 
   const userFollow = followers?.some(follower => follower === auth._id)
 
+  const seguidores = followers?.length === 1 ? `${followers?.length} Seguidor` : `${followers?.length} Seguidores`
+
+  const seguidos = following?.length === 1 ? `${following?.length} Seguido` : `${following?.length} Seguidos`
+
   return (
     <div className='flex flex-col gap-6'>
       <div className='flex justify-between'>
@@ -92,8 +96,8 @@ const UsersProfile = () => {
       </div>
       <div className='flex justify-between'>
         <div className='flex gap-5'>
-          <p>{followers?.length === 1 ? `${followers?.length} Seguidor` : `${followers?.length} Seguidores`} </p>
-          <p>{following?.length === 1 ? `${following?.length} Seguido` : `${following?.length} Seguidos`} </p>
+          <p>{seguidores} </p>
+          <p>{seguidos} </p>
         </div>
         <div className='flex gap-5'>
           <FaInstagram className='md:w-9 md:h-9 w-7 h-7' />
@@ -111,7 +115,7 @@ const UsersProfile = () => {
         <p>Publicaciones</p>
       </div>
       <div>
-        {postsUser?.length > 1
+        {postsUser?.length
           ? postsUser.map(post => (
             <CardPosts
               key={post._id}

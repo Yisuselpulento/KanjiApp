@@ -9,6 +9,10 @@ const AuthUserProvider = ({ children }) => {
   const [cargando, setLoading] = useState(true)
   const [posts, setPosts] = useState([])
 
+  const [repliesState, setRepliesState] = useState([])
+  const [postPage, setPostPage] = useState({})
+  const [stateNumberReplies, setStateNumberReplies] = useState(postPage.numberOfReplies)// estado de numero de comentarios pasandolo a global
+
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -52,7 +56,13 @@ const AuthUserProvider = ({ children }) => {
         cargando,
         cerrarSesionAuth,
         posts,
-        setPosts
+        setPosts,
+        setStateNumberReplies,
+        stateNumberReplies,
+        setPostPage,
+        postPage,
+        setRepliesState,
+        repliesState
       }}
     >
       {children}

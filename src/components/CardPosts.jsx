@@ -78,6 +78,7 @@ const CardPosts = ({ post }) => {
       <Modal isOpen={isOpen} onClose={closeModal}>
         <FormReplies
           postId={_id}
+          closeModal={closeModal}
         />
       </Modal>
     </div>

@@ -22,13 +22,13 @@ const FormPost = ({ closeModal }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    /* if (!postText.trim()) {
+    if (!postText.trim()) {
       setAlert({
         msg: 'No hay nada escrito',
         error: true
       })
       return
-    } */
+    }
     try {
       let imageUrl = ''
 
@@ -70,7 +70,7 @@ const FormPost = ({ closeModal }) => {
   return (
     <form onSubmit={handleSubmit} className='bg-postColor md:px-8 px-4 pt-14 md:pb-8 pb-4 rounded flex flex-col md:gap-6 gap-6 text-gray-200'>
       <p className='text-2xl font-bold'>Crea un post</p>
-      <input
+      <textarea
         type='text'
         value={postText}
         onChange={handleTextChange}

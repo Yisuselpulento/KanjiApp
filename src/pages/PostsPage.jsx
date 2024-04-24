@@ -18,10 +18,7 @@ const PostsPage = () => {
   const [loading, setLoading] = useState(true)
   const [postText, setPostText] = useState('')
   const [alert, setAlert] = useState({})
-  const { auth } = useAuth()
-  const [post, setPost] = useState({})
-
-  const [repliesState, setRepliesState] = useState([])
+  const { auth, postPage, setPostPage, stateNumberReplies, setStateNumberReplies, repliesState, setRepliesState } = useAuth()
 
   const { postId } = useParams()
 
@@ -30,7 +27,8 @@ const PostsPage = () => {
       try {
         const postData = await fetchPostPage(postId)
         setRepliesState(postData.replies)
-        setPost(postData)
+        setStateNumberReplies(postData.numberOfReplies)
+        setPostPage(postData)
       } catch (error) {
         console.error('Error fetching data:', error)
         setLoading(false)
@@ -50,7 +48,7 @@ const PostsPage = () => {
     setIsOpen(false)
   }
 
-  const { text, likes, createdAt, author, img, numberOfLikes, numberOfReplies } = post
+  const { text, likes, createdAt, author, img, numberOfLikes } = postPage
 
   const isUser = auth._id === author?._id
 
@@ -70,6 +68,7 @@ const PostsPage = () => {
         msg: 'No hay nada escrito',
         error: true
       })
+      return
     }
 
     try {
@@ -78,6 +77,7 @@ const PostsPage = () => {
       }
       const newReplie = await createReplies(postId, replieInfo)
       setRepliesState(prevReplies => [...prevReplies, newReplie.newReply])
+      setStateNumberReplies(prev => prev + 1)
       toast.success(newReplie.message)
       setPostText('')
       setAlert({})
@@ -95,6 +95,7 @@ const PostsPage = () => {
 
   const updateReplies = (deletedReplyId) => {
     setRepliesState(prevReplies => prevReplies.filter(reply => reply._id !== deletedReplyId))
+    setStateNumberReplies(prev => prev - 1)
   }
 
   return (
@@ -116,7 +117,7 @@ const PostsPage = () => {
           <p className='dark:text-neutral-600 text-gray-500'>Hace {calculateTimeSincePost(createdAt)}</p>
           {auth._id === author?._id &&
             <DeletePostButton
-              postId={author}
+              postId={postId}
             />}
         </div>
       </div>
@@ -134,7 +135,7 @@ const PostsPage = () => {
           postiD={postId}
           openModal={openModal}
           likes={likes}
-          numberOfReplies={numberOfReplies}
+          numberOfReplies={stateNumberReplies}
           numberOfLikes={numberOfLikes}
         />
 
@@ -174,6 +175,7 @@ const PostsPage = () => {
       <Modal isOpen={isOpen} onClose={closeModal}>
         <FormReplies
           postId={postId}
+          closeModal={closeModal}
         />
       </Modal>
     </div>

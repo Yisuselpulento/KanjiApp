@@ -40,6 +40,10 @@ const Profile = () => {
 
   const { username, bio, age, country, profilePic, sexo, followers, following } = auth
 
+  const seguidores = followers ? (followers.length === 1 ? `${followers.length} Seguidor` : `${followers.length} Seguidores`) : 'loading Seguidores'
+
+  const seguidos = following ? (following.length === 1 ? `${following.length} Seguido` : `${following.length} Seguidos`) : 'loading Seguidos'
+
   if (loading) {
     return (
       <div className='flex items-center justify-center h-screen'>
@@ -92,8 +96,8 @@ const Profile = () => {
       </div>
       <div className='flex justify-between'>
         <div className='flex gap-5'>
-          <p>{followers?.length === 1 ? `${followers?.length} Seguidor` : `${followers?.length} Seguidores`} </p>
-          <p>{following?.length === 1 ? `${following?.length} Seguido` : `${following?.length} Seguidos`} </p>
+          <p>{seguidores} </p>
+          <p>{seguidos} </p>
         </div>
         <div className='mr-4'>
           <FaInstagram className='md:w-9 md:h-9 w-7 h-7' />

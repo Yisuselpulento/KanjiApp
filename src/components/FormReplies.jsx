@@ -1,11 +1,15 @@
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { createReplies } from '../services/postsFetch'
+import useAuth from '../hooks/useAuth'
+import Alert from './Alert'
 
-const FormReplies = ({ postId }) => {
+const FormReplies = ({ postId, closeModal }) => {
   const [postText, setPostText] = useState('')
   const [alert, setAlert] = useState({})
   const [loading, setLoading] = useState(true)
+
+  const { setStateNumberReplies, setRepliesState } = useAuth()
 
   const handlePostReplie = async (e) => {
     e.preventDefault()
@@ -15,15 +19,21 @@ const FormReplies = ({ postId }) => {
         msg: 'No hay nada escrito',
         error: true
       })
+      return
     }
 
     try {
       const replieInfo = {
         text: postText
       }
-      await createReplies(postId, replieInfo)
+      const newReplie = await createReplies(postId, replieInfo)
+      setRepliesState(prevReplies => [...prevReplies, newReplie.newReply])
+      setStateNumberReplies(prev => prev + 1)
       toast.success('Comentario Creado Correctamente')
+      closeModal()
       setPostText('')
+      setAlert({
+      })
     } catch (error) {
       setLoading(false)
       toast.error('Ha ocurrido un error')
@@ -39,11 +49,12 @@ const FormReplies = ({ postId }) => {
       onSubmit={handlePostReplie}
       className='bg-postColor md:px-8 px-4 pt-14 md:pb-8 pb-4 rounded flex flex-col md:gap-10 gap-6 '
     >
-      <input
-        className='p-3 rounded border border-[#64748b] bg-postColor w-full  '
+      <textarea
+        className='p-1 rounded border border-[#64748b] bg-postColor w-full  '
         onChange={handleTextChange}
       />
-      <div className='flex justify-end'>
+      <div className='flex justify-end gap-5'>
+        {alert.msg && <Alert alert={alert} />}
         <input
           disabled={!loading}
           type='submit'

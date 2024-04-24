@@ -5,10 +5,13 @@ import { useState } from 'react'
 import Spinner from './Spinner'
 import { toast } from 'react-toastify'
 import useAuth from '../hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
 
 const DeletePostButton = ({ postId }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+
+  const navigate = useNavigate()
 
   const { posts, setPosts } = useAuth()
 
@@ -20,6 +23,9 @@ const DeletePostButton = ({ postId }) => {
       setPosts(updatedProducts)
       toast.success('Eliminado Correctamente')
       closeModal()
+      if (window.location.pathname !== '/profile') {
+        navigate('/profile')
+      }
     } catch (error) {
       console.log(error)
       toast.error(error.response.data.message)
