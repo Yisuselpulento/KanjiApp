@@ -15,6 +15,9 @@ export default {
         hoverDark: '#292524',
         hoverLight: '#d1d5db',
         postColor: '#334155'
+      },
+      fontFamily: {
+        yeseva: 'Yeseva One'
       }
     }
   },
