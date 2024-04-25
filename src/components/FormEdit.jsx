@@ -69,8 +69,8 @@ const FormEdit = ({ closeModal }) => {
   }
 
   return (
-    <div className='flex justify-center items-center h-full p-8 md:p-1 '>
-      <div className='dark:bg-stone-900 bg-gray-200 w-full rounded-lg p-6 md:p-14 md:w-[500px] flex flex-col gap-4 dark:text-indigo-100 min-h-screen md:min-h-[700px]'>
+    <div className='flex justify-center items-center md:h-full p-8 md:p-1 '>
+      <div className='dark:bg-stone-900 bg-gray-200 w-full rounded-lg p-6 md:p-14 md:w-[500px] flex flex-col gap-4 dark:text-indigo-100  md:min-h-[700px]'>
         <div>
           <p className='md:text-3xl text-xl font-bold'>Edita tu info</p>
         </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import ButtonTheme from '../components/ButtonTheme'
+import Footer from '../components/Footer'
 
 const LayoutLogin = () => {
   return (
@@ -25,9 +26,7 @@ const LayoutLogin = () => {
       <main className='min-h-screen w-full items-center flex justify-center'>
         <Outlet />
       </main>
-      <footer className='flex items-center justify-center dark:bg-bgDark border-t border-gray-100 h-[100px] bg-gray-200'>
-        FOOTER
-      </footer>
+      <Footer />
     </div>
   )
 }

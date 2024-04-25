@@ -3,7 +3,10 @@ import Alert from '../components/Alert'
 import { useNavigate } from 'react-router-dom'
 import clienteAxios from '../config/clienteAxios'
 import useAuth from '../hooks/useAuth'
+import Spinner from '../components/Spinner'
+
 const Login = () => {
+  const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     username: '',
     password: ''
@@ -37,6 +40,7 @@ const Login = () => {
     }
 
     try {
+      setLoading(true)
       const { data } = await clienteAxios.post('/users/login', formData)
 
       setAlert({})
@@ -49,6 +53,8 @@ const Login = () => {
         msg: error.response.data.msg,
         error: true
       })
+    } finally {
+      setLoading(false)
     }
   }
   return (
@@ -84,12 +90,17 @@ const Login = () => {
             />
           </div>
 
-          <input
+          <button
             to='/'
             className='bg-blue-700 hover:bg-blue-800 uppercase cursor-pointer p-3 md:p-4 w-full font-bold md:text-lg text-md text-white text-center'
             type='submit'
-            value='Entrar'
-          />
+
+          >{loading
+            ? <div className='flex items-center justify-center'>
+              <Spinner size='28' color='#ffffff' />
+            </div>
+            : 'Entrar'}
+          </button>
           {alert.msg && <Alert alert={alert} />}
 
         </form>
