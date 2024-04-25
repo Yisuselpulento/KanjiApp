@@ -76,13 +76,13 @@ const HeartAndReplies = ({ openModal, postiD, likes, numberOfReplies, numberOfLi
             {numberOfLikesState === 1 ? 'Like' : 'Likes'}
           </p>
           {hovered && (
-            <div className='absolute z-10 top-full left-0 rounded shadow-md '>
+            <div className='absolute z-10 top-full right-1 rounded shadow-md '>
               {usersLikes.map(user => (
 
                 <Link
                   key={user._id}
                   to={user._id === auth._id ? '/profile' : `/user/${user._id}`}
-                  className='flex gap-5  rounded-lg items-center bg-gray-100 border-b w-52 dark:bg-stone-800 p-3 dark:text-gray-200 text-gray-700 hover:bg-gray-300 dark:hover:bg-stone-900'
+                  className='flex gap-2  rounded-lg items-center bg-gray-100 border-b w-52 dark:bg-stone-800 p-2 dark:text-gray-200 dark:border-stone-900 text-gray-700 hover:bg-gray-300 dark:hover:bg-stone-900'
                 >
                   <div>
                     <img
