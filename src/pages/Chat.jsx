@@ -2,9 +2,9 @@ import React from 'react'
 
 const Chat = () => {
   return (
-    <div className='bg-gradient-to-r from-red-800 to-black  py-2 rounded relative'>
-      <div className='fixed flex items-center gap-7 ml-6'>
-        <p className='text-3xl font-serif text-pink-500 bg-black'>Chat aun no terminado</p>
+    <div className='bg-gradient-to-r from-red-800 to-black  py-2 rounded relative w-full'>
+      <div className='fixed flex items-center gap-7 '>
+        <p className='text-2xl ml-8 font-serif text-pink-500 bg-black'>Chat aun no terminado</p>
         <img src='vomit.webp' className='h-[150px]  ' />
 
       </div>
@@ -31,8 +31,9 @@ const Chat = () => {
         <input type='text' />
 
       </div>
-      <p className='absolute m-10'>
-        Aspernatur, quod. Quibusdam placeat labore, nulla eum tenetur iusto consectetur pariatur nobis consequatur aperiadgfdm unde adgdfgfdgdfgdfgdfgdfgdfgfdgdfgdfgdfgfdgdfgspernatur ipsa laborum sunt? Hic error voluptas at quos veniam sint soluta, libero porro ut!dfgdfgdfgdfgfdgdfgdfgfg
+      <p className='absolute '>
+        Aspernatur, quod. Quibusdam placeat labore, nulla eum tenetur iusto consectetur pariatur nobis consequatur aperiadgfdm unde adgdfgfdgdfgdfgdfgdfgdf
+        gfdgdfgdfgdfgfdgdfgspernatur ipsa laborum sunt? Hic error voluptas at quos veniam sint soluta, libero porro ut!dfgdfgdfgdfgfdgdfgdfgfg
       </p>
       <p className='font-yeseva p-3'>numquam vitae totam cupiditate? Nam vitae quo cum cumque ullam enim saepe fugiat ipsum fugit ex!
         Aliquam earum, quae ab sunt iusto quasi cum odit eos eum qui animi in dolorum hic soluta amet officia fugiat asperiores officiis pariatur vitae. Nobis alias expedita ipsa et ex.
@@ -42,6 +43,7 @@ const Chat = () => {
       <button className='bg-black px-5 uppercase font-vold rounded ml-64 hover:bg-red-600'>
         enviar
       </button>
+      <p>Fixed replis num fixed undefined profile follow fixed nav / defeault && searchBar</p>
 
     </div>
   )

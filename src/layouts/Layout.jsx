@@ -12,6 +12,7 @@ import SearchBar from '../components/SearchBar'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5'
+import Footer from '../components/Footer'
 
 const Layout = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -45,7 +46,7 @@ const Layout = () => {
               </NavLink>
               <ButtonTheme />
               <SearchBar />
-              <div className='flex gap-3 items-center justify-center'>
+              <div className='flex gap-1 items-center justify-center'>
                 <NavLink
                   className={({ isActive }) =>
                     isActive ? 'dark:hover:bg-stone-800 hover:bg-gray-300 rounded-full md:p-2 p-1 bg-hoverLight dark:bg-hoverDark text-blue-600' : 'dark:hover:bg-stone-800 hover:bg-gray-300  md:p-2 p-1 rounded-full '}
@@ -74,15 +75,7 @@ const Layout = () => {
         </>
         : <Navigate to='/login' />}
 
-      <footer className='flex items-center justify-center dark:bg-bgDark border-t border-gray-100 h-[100px] bg-gray-200'>
-        <ToastContainer
-          theme='colored'
-          autoClose={2000}
-          position='bottom-center'
-          className='px-10  w-[400px] p-2'
-        />
-        FOOTER
-      </footer>
+      <Footer />
       <button
         onClick={openModal}
         className='dark:bg-stone-800 dark:hover:bg-stone-900 bg-blue-700 hover:bg-gray-400 md:p-2 rounded fixed md:bottom-4 md:right-4 bottom-2 right-2'
@@ -94,6 +87,12 @@ const Layout = () => {
           closeModal={closeModal}
         />
       </Modal>
+      <ToastContainer
+        theme='colored'
+        autoClose={2000}
+        position='bottom-center'
+        className='px-10  w-[400px] p-2'
+      />
 
     </div>
   )

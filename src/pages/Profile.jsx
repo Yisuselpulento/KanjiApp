@@ -1,6 +1,5 @@
 import { FaInstagram } from 'react-icons/fa'
 import CardPosts from '../components/CardPosts'
-import { IoEllipsisHorizontalCircleOutline } from 'react-icons/io5'
 import { useEffect, useState } from 'react'
 import Modal from '../components/Modal'
 import FormEdit from '../components/FormEdit'
